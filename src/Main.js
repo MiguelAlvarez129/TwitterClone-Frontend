@@ -6,7 +6,7 @@ import {
   useHistory,
   Redirect,
 } from "react-router-dom";
-import { Alert } from "rsuite";
+import { Alert, Loader } from "rsuite";
 import Gallery from "./components/Gallery/Gallery";
 import Register from "./components/Register";
 import Login from "./components/Login";
@@ -20,90 +20,76 @@ import Reply from "./components/Reply";
 import Notifications from "./components/Notifications/Notifications"
 import ProfileSettings from "./components/ProfileSettings/ProfileSettings"
 import "rsuite/dist/styles/rsuite-default.css";
-import { Container, Content, Header, Footer } from "rsuite";
+import { Container, Content} from "rsuite";
 import { setAuthToken } from "./controllers/setAuth";
-import { Rightmenu } from "./shared/styles";
 import Loading from "./shared/Loading";
 import { trackPromise } from "react-promise-tracker";
 import { authenticate } from "./controllers/axios";
 import { useSelector, useDispatch } from "react-redux";
-import jwt_decode from "jwt-decode";
-import { logOut } from "./redux/slices/authSlice";
-import ProtectedRoute from "./private/ProtectedRoute";
-import Info from "./components/Info/Info"
 import {userOnline, notificationsRead} from "./controllers/ioControllers"
 import RightMenu from "./components/RightMenu/RightMenu"
-import { io } from "socket.io-client";
 import axios from  "axios"
+import ProtectedRoute from "./private/ProtectedRoute";
+import PublicRoute from "./private/PublicRoute";
+
 
 const Main = () => {
-  const [dark, setDark] = useState(false);
+  const [loading, setLoading] = useState(true)
   const auth = useSelector((state) => state.user.isAuth);
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
-  const background = location.state && location.state.background;
+  let background =  location.state?.background;
   axios.defaults.baseURL = "http://localhost:5000"
+  
   useEffect(() => {
+    const {pathname,state} = location
+    // if (state?.from == "/compose/tweet" ){
+    //   location.state =  {pathname:"/home"}
+    // }
+    // console.log("HEREEE!",background)
+    // if (pathname || state.from  == "/settings/profile" ){
+    //   location.state = {background:{pathname:"/home"}}
+    // }
+
+
     if (localStorage.getItem("token")) {
       setAuthToken(localStorage.getItem("token"));
       trackPromise(authenticate(dispatch));
-    }
-  
-    const {pathname} = location
-    if (pathname == "/compose/tweet" ){
-      location.state = {background:{pathname:"/home"}}
-    }
-    if (pathname == "/settings/profile" ){
-      location.state = {background:{pathname:"/home"}}
-    }
-  }, []);
+    } 
+    console.log(location,auth)
+  }, [auth]);
+
+
   
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      const decoded = jwt_decode(localStorage.getItem("token"));
-      if (decoded.exp < Date.now() / 1000) {
-        Alert.warning("Your session has timed out", 5000);
-        dispatch(logOut());
-        setAuthToken(false);
-        localStorage.clear();
-      }
-    } 
-    const {pathname} = location
 
+    const {pathname} = location
     if(auth){
-     
       userOnline(user.username)
       if (pathname == "/notifications" ){
         notificationsRead(user.username)
-      }
-    }
-  }, [auth, location.key]);
+      }  
+    } 
+  }, [auth]);
+
  
-  return (
-    <Switch>
-      <Route exact path="/" component={(props) => <Home auth={auth} />} />
-      <Route exact path="/register" component={Register} />
-      <Route exact path="/login" component={(props) => <Login {...props} />} />
-      <Route
-        render={() => (
-          <Container
-            style={{
-              display: "flex",
-              height: "100%",
-              width: "100%",
-              flexDirection: "row",
-              justifyContent: "center",
-            }}
-          >
-            <Sidebar auth={auth} />
-            <Content style={{ maxWidth: 592 }}>
-              <Switch location={background || location}>
+  const Prueba = () => {
+    return (
+      <Route render={()=>(
+        <>
+
+           <Switch location={background || location}>
                 <Route
                   exact
                   path="/home"
                   render={(props) => <Dashboard {...props} />}
+                />
+                <Route
+                  exact
+                  path="/404"
+                  render={(props) => <NotFound {...props} />}
                 />
                 <Route
                   exact
@@ -134,12 +120,8 @@ const Main = () => {
                   path="/:profile/:tweetId"
                   render={(props) => <PostView {...props} />}
                 /> 
-                {/* <Route
-                  exact
-                  path="/404"
-                  render={(props) => <NotFound {...props} />}
-                />  */}
-              </Switch>
+           </Switch>
+           <Loading/>
               {background && (
                 <Route
                   exact 
@@ -161,28 +143,61 @@ const Main = () => {
                   render={(props) => <Gallery {...props} />}
                 />
               )}
+        </>
+
+      )}/>
+    )
+  }
+  const PublicRoutes = () =>{
+    return (
+      <Route render={()=>(
+        <div>
+
+          <Route exact path="/" render={(props) => <Home  {...props} auth={auth} loading={loading} />} />
+          <Route exact path="/register" render={(props)=> <Register {...props}/>} />
+          <Route exact path="/login" component={(props) => <Login {...props} />} />
+        </div>
+     
+      )}/>
+    )
+  }
+  return (
+    <Switch>
+      <PublicRoute  exact path="/" component={Home}/>
+      <PublicRoute exact path="/login" component={Login}/>
+      <PublicRoute exact path="/register" component={Register}/>
+      {/* <Route exact path="/" render={(props) => <Home  {...props} auth={auth} loading={loading} />} />
+      <Route exact path="/register" render={(props)=> <Register {...props}/>} />
+      <Route exact path="/login" component={(props) => <Login {...props} />} /> */}
+      <Route
+        render={() => (
+        
+          <Container
+            style={{
+              display: "flex",
+              height: "100%",
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <Sidebar />
+            <Content style={{ maxWidth: 592 }}>
+     
+              <ProtectedRoute component={(props)=> <Prueba {...props}/>}/>
+             
                 
-              <Loading />
             </Content>
-            
               <RightMenu/>
           
           </Container>
         )}
       />
+    
     </Switch>
   );
 };
 
 export default Main;
 
-const notFound = (props) => {
-  return (<div>
-  <p>
-    mmm... this page doesn't seem to exist, let's go back home
-    <button>
-
-    </button>
-  </p>
-  </div>)
-};
+;

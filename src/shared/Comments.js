@@ -12,7 +12,6 @@ const Comments = (props) => {
       axios
         .post("/app/getComments", { comments: props.comments },{cancelToken:cancel.token})
         .then((res) => {
-          console.log(res.data)
           setComments(res.data);
         })
         .catch((err) => console.log(err));
@@ -28,12 +27,11 @@ const Comments = (props) => {
         comments && comments.map((e, index) => 
         {
           let last = comments.length > 0 && (comments.length - 1) == index ? true : false;
-          console.log("comments",comments.length > 1)
-          console.log("comments2",!!(comments.length-1))
+  
 
           return <Tweet
             {...e}
-
+            key={index}
             comment={true}
             last={
               last

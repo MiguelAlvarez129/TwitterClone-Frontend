@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ProfilePic from "../../shared/ProfilePic";
 import axios from "axios";
 import { trackPromise } from "react-promise-tracker";
-import { Panel, Grid, Col, Row, IconButton, Icon, DateRangePicker } from "rsuite";
+import { Col, Row, Alert } from "rsuite";
 import {
   FlexCenter,
   Fullname,
@@ -12,15 +12,13 @@ import {
 } from "../../shared/styles";
 import FollowButton from "../FollowButton/FollowButton"
 import Feed from "../../shared/Feed";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import "react-quill/dist/quill.snow.css";
 import { useHistory, useLocation } from "react-router-dom";
 import Topbar from "../../shared/Topbar"
 
 const UserProfile = (props) => {
-  //const [user, setUser] = useContext(UserContext);
   const user = useSelector((state) => state.user.user);
-  const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
   const [data, setData] = useState({});
@@ -33,19 +31,24 @@ const UserProfile = (props) => {
 
   useEffect(() => {
     console.log("key",props)
-    trackPromise(
+
       axios
-        .post("/app/getUser", { username: profile })
+        .post("/app/getUser", { username: profile }) 
         .then((res) => {
-          localStorage.setItem("content", JSON.stringify(res.data));
+         // localStorage.setItem("content", JSON.stringify(res.data));
           setData(res.data);
-          console.log(res.data)
         })
         .catch((e) => {
           setData(false)
-          console.log(e)
+          if (e.response.status === 404){
+            Alert.error(e.response.statusText,5000)
+            history.push("/404")
+          } else {
+            Alert.error(e.response.statusText,5000)
+          }
+          //console.log()
         })
-    );
+  
     return () => {
       console.log("unmounting...");
       setData({})

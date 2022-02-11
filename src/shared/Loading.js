@@ -5,7 +5,7 @@ import { WhiteBackground, CustomLoader } from "../shared/styles";
 import { FeedLoader } from "../shared/styles";
 const Loading = (props) => {
   const { promiseInProgress } = usePromiseTracker({ area: props.area});
-
+  const {fullWidth} = props
   return (
     promiseInProgress &&
     (props.area == "feed"? (
@@ -13,7 +13,7 @@ const Loading = (props) => {
     ) : props.area === "images" ? (
       <Loader center size="md" backdrop />
     ): (
-    <WhiteBackground>
+    <WhiteBackground fullWidth={fullWidth}>
         <Loader center size="md"  />
       </WhiteBackground>)
     )

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../../node_modules/react-responsive-carousel/lib/styles/carousel.min.css";
-import { IconButton, Icon, Loader, Panel, Divider, Drawer } from "rsuite";
+import { IconButton, Icon, Loader} from "rsuite";
 import User from "../../shared/User"
 import Tweet from "../../shared/Tweet"
 import { useSelector } from "react-redux";
@@ -25,6 +25,7 @@ const Gallery = (props) => {
   const history = useHistory();
   const location = useLocation();
   useEffect(() => {
+    console.log(location,"GALLERY")
     const cancel = axios.CancelToken.source();
     document.body.style.overflow = "hidden";
     axios
@@ -161,8 +162,8 @@ const Gallery = (props) => {
                 selectedItem={slide}
                 
               >
-                {images.map((e) => (
-                  <div>
+                {images.map((e,index) => (
+                  <div key={index} >
 
                     <img src={e && e.pic} style={{maxWidth:'100%',width:'auto',maxHeight:'90vh'}}/>
                   </div>
@@ -240,7 +241,7 @@ const Gallery = (props) => {
             display: drawer ? "block" : "none"
           }}
         > 
-        {data && data.map(e => <Tweet {...e} big/>)}
+        {data && data.map((e,index) => <Tweet key={index} {...e} big/>)}
       </div> 
      
       <RegisterMessage show={show} close={(e) => close(e)} />

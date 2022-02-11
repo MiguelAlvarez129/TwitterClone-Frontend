@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory, useLocation, Redirect } from "react-router-dom";
-import User from "../shared/User";
-import { likePost } from "../controllers/axios";
 import { useSelector, useDispatch } from "react-redux";
-import RegisterMessage from "../shared/RegisterMessage";
 import Comments from "../shared/Comments";
 import Tweet from "../shared/Tweet"
 import Topbar from "../shared/Topbar"
-import {
-  Title,
-  TopBar,
-  TopWrapper,
-} from "../shared/styles";
-import { IconButton, Icon, Divider } from "rsuite";
 import {updateDone} from "../redux/slices/postSlice"
 import axios from "axios";
 import { trackPromise } from "react-promise-tracker";
@@ -26,12 +17,16 @@ const PostView = (props) => {
   const [redirect,setRedirect] = useState(false)
   const { tweetId, profile } = useParams();
   const location = useLocation();
-  const history = useHistory();
   const retweetBy = location.state && location.state.retweetBy
-
+  useEffect(() => {
+ 
+    return () => {
+      console.log("CLEAN UP!")
+    }
+  }, [])
 
   useEffect(() => {
-      
+      console.log(location)
       const prueba = () =>{
           return  new Promise(resolve => setTimeout(() => resolve("Done!"),10000000))
         }

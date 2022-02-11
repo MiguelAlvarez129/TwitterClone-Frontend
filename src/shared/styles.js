@@ -56,6 +56,7 @@ export const Sidemenu = styled.div`
         width:70px;
         padding: 0px;
         align-items: center;
+        ${props=> props.right && `display:none;`}
     }
     position:sticky;
     top:0;
@@ -67,29 +68,11 @@ export const Sidemenu = styled.div`
     width:${props=> props.right ?  "400px" : "314px" };
     height:100vh;
     margin-bottom:0px;
-    ${props=> props.right ? "border-left: 1px solid lightgray" : "border-right: 1px solid lightgray" }
+    ${props=> props.right ? "border-left: 1px solid lightgray" : "border-right: 1px solid lightgray" };
+    ${props=> props.right && `padding:10px 20px;`}
 `
 
-export const Rightmenu = styled.div`
-     @media (max-width:1000px){
-        display:none;
-        width:70px;
-        padding: 0px;
-        align-items: center;
-    }
-    position:sticky;
-    z-index:100; 
-    top:0;
-    display:"flex";
-    flex-direction:column;
-    align-items:flex-start;
-    padding-left: 20%;
-    background: ${props=> props.dark ? '#434343' : 'white'};
-    width:400px;
-    height:100vh;
-    margin-bottom:0px;
-    border-left: ${props=> props.dark ? 'white' : 'lightgray'} solid 1px;
-`
+
 
 export const TweetButton = styled.button`
     ${props => props.top && "margin-top:120px"};
@@ -162,6 +145,9 @@ export const Sideoption = styled.div`
     background: rgba(30, 144, 255,0.1);
     color:dodgerblue;
     }
+
+    ${props => props.width && `
+    width:60%;` }
 `
 export const ResponsiveMenu = styled.div`
  
@@ -558,7 +544,8 @@ export const FlexColumn = styled.div`
     display:flex;
     flex-direction:column;
     width: auto;
-    flex: ${props => props.block && "auto" }
+    flex: ${props => props.block && "auto" };
+  
 
 `
 export const FlexCenter = styled.div`
@@ -651,7 +638,7 @@ export const ToolbarButton = styled(IconButton)`
 
 export const WhiteBackground = styled.div`
     z-index:100;
-    max-width: ${props => props.width ? props.width + "px" : "592px" };
+    max-width: ${props => props.width ? props.width + "px" : props.fullWidth ? "none":"592px"  };
     width:100%;
     height: 100%;
     background:white;
@@ -659,6 +646,7 @@ export const WhiteBackground = styled.div`
     top: 0;
     display:block;
     overflow:hidden;
+    ${props => props.home && `max-width:none`};
 `
 
 export const Bg = styled.div`
@@ -689,5 +677,16 @@ export const FeedLoader = styled(Loader)`
     display: flex;
     justify-content: center;
 `
+export const SadFace = styled.div`
+    height: 100px;
+    width:100px;
+    background-color:dodgerblue;
 
+    &:after{
+        content:"";
+        height:50px;
+        width:50px;
+        
+    }
+`
 

@@ -22,13 +22,10 @@ const Feed = (props) => {
   useEffect(() => { // new props => renderize/change => cleanup => new effect
     const cancel = axios.CancelToken.source()
     const url = props.home ?  "/app/feed" : "/app/getUserTweets";
-    console.log(url) 
-  
+
     if (_id != undefined) {
       trackPromise(  axios.post(url, { userId:_id },{cancelToken:cancel.token}).then((res) => {
-        console.log("old data",posts)
         setPosts(res.data)
-        console.log("new data",res.data)
         setLoading(false)
         if (update){
           dispatch(updateDone())

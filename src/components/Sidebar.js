@@ -21,7 +21,7 @@ import User from "../shared/User";
 import { useSelector, useDispatch} from "react-redux";
 import RegisterMessage from "../shared/RegisterMessage"
 import socket from "../controllers/ioControllers" 
-const Sidebar = (props) => {
+const Sidebar = () => {
   const [show,setShow] = useState(false)
   const user = useSelector((state) => state.user.user);
   const auth = useSelector((state) => state.user.isAuth);
@@ -52,9 +52,14 @@ const Sidebar = (props) => {
   ]
 
   useEffect(()=>{
+    console.log("RE RENDER")
     socket.on("notification",(value)=>{
       setNoti(value);
     })
+
+    return ()=>{
+      socket.off("notification")
+    }
   },[])
 
 
@@ -65,9 +70,7 @@ const Sidebar = (props) => {
         else return {...e,selected:false} 
       })
     )
-   if (auth){
-      setLoading(false)
-   }
+    setLoading(false)
   }, [location.key,auth])
 
 
@@ -116,7 +119,7 @@ const Sidebar = (props) => {
     localStorage.removeItem("token");
     setAuthToken(false);
     dispatch(logOut());
-    console.log("out");
+
   };
 
   const MenuContents = () =>{

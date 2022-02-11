@@ -50,17 +50,24 @@ const Tweet = (props) => {
   const location = useLocation();
   const undo =
   retweets && retweets.usersRetweeted.indexOf(userId) == -1 ? false : true;
-  //console.log(last)
   useEffect(() => {
     const cancel = axios.CancelToken.source();
-    if (files) {
+
+    if (files && files.length) {
       axios
         .post("/app/testposts", { files }, { cancelToken: cancel.token })
         .then((res) => {
           setImages(res.data);
-          setLike(likes.quantity)
-          setRq(retweets.quantity)
         });
+    }
+    // if (likes){
+    //   setLike(likes.quantity)
+    //   console.log("COMMENTS",comments)
+    // }
+    
+    if (retweets){
+      setRq(retweets.quantity)
+
     }
 
     return () => {
@@ -82,6 +89,7 @@ const Tweet = (props) => {
       pathname: `/${username}/${_id}/gallery`,
       state: {
         background: location,
+        notLoad: true,
       },
     });
   };
@@ -168,7 +176,7 @@ const Tweet = (props) => {
           type={"red"}
           size="lg"
         />
-        <b>{like}</b>
+        <b>{likes && likes.quantity}</b>
       </div>
       <ToolbarButton
         icon={<Icon icon="share" />}
@@ -196,8 +204,9 @@ const Tweet = (props) => {
               {content}
             </PostContent>
             <ImageContainer images={images} onClick={openGallery}>
-              {images.map((e) => (
+              {images.map((e,index) => (
                 <div
+                  key={index}
                   style={{ 
                     backgroundColor: "lightgray",
                     backgroundImage: `url(${e && e.pic})`,
