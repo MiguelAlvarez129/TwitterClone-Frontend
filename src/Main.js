@@ -41,7 +41,7 @@ const Main = () => {
   const location = useLocation();
   const history = useHistory();
   let background =  location.state?.background;
-  axios.defaults.baseURL = "http://localhost:5000"
+  axios.defaults.baseURL = process.env.REACT_APP_API_URL
   
   useEffect(() => {
     const {pathname,state} = location
