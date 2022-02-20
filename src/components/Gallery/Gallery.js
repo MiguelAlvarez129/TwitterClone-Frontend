@@ -37,7 +37,6 @@ const Gallery = (props) => {
         setImages(res.data.files.map((e) => null));
         const { files } = res.data;
         axios.post("/app/testposts", { files }).then((res) => {
-          console.log("IT WORKS!");
           setImages(res.data);
           setLoading(false);
         });

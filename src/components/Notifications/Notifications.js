@@ -6,6 +6,7 @@ import User from "../../shared/User"
 import axios from "axios"
 import {Loader} from "rsuite"
 import { Link } from "react-router-dom"
+import { notificationsRead } from "../../controllers/ioControllers"
 import socket from "../../controllers/ioControllers"
 import { trackPromise } from "react-promise-tracker";
 import { useHistory } from "react-router"
@@ -18,6 +19,7 @@ const Notifications = (props) =>{
     trackPromise(axios.post("/app/notifications",{username})
     .then((res)=>{
       setNotifications(res.data)
+      notificationsRead(username)
     })
     .catch(error => console.log(error))
     )

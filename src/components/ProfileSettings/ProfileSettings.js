@@ -25,11 +25,13 @@ const ProfileSettings = (props) => {
   const { register, handleSubmit, errors, setValue} = useForm();
   
   useEffect(() => {
+    const cancel = axios.CancelToken.source();
     const {username} = user;
     if (username){
-        axios
-          .post("/app/getuser", { username })
-          .then((res) => {
+      axios
+      .post("/app/getuser", { username }, {cancelToken:cancel.token})
+      .then((res) => {
+            console.log(username,"HERE!")
             setLoading(false)
             setPic(res.data.file)
             setBg(res.data.bg)
@@ -38,12 +40,9 @@ const ProfileSettings = (props) => {
            
           })
           .catch((error) => console.log(error))
-          
-      ;
     }
     return () => {
-      console.log(ref3.current);
-
+      cancel.cancel()
     };
   }, [user]);
   const onSubmit = (e) =>{
@@ -57,7 +56,6 @@ const ProfileSettings = (props) => {
       history.goBack();
     })
     .catch(err =>console.log(err))
-    console.log(data)
   }
   const back = (e) => {
     e.stopPropagation();

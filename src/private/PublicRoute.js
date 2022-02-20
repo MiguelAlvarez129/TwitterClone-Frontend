@@ -12,7 +12,6 @@ const PublicRoute = ({ children,component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        console.log("PUBLIC",state)
 
           return auth ? (
             <Redirect to={

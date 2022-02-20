@@ -52,7 +52,6 @@ const Sidebar = () => {
   ]
 
   useEffect(()=>{
-    console.log("RE RENDER")
     socket.on("notification",(value)=>{
       setNoti(value);
     })

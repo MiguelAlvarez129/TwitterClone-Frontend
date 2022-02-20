@@ -6,7 +6,6 @@ import Post from "./Post"
 import {useSelector} from "react-redux"
 const FloatingEditor = (props) => {
   const { show, close, contents, post } = props;
-  console.log(props.contents && props.contents.username)
 
   const user = useSelector(state => state.user.user)
   return (

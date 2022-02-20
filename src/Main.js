@@ -6,7 +6,6 @@ import {
   useHistory,
   Redirect,
 } from "react-router-dom";
-import { Alert, Loader } from "rsuite";
 import Gallery from "./components/Gallery/Gallery";
 import Register from "./components/Register";
 import Login from "./components/Login";

@@ -30,12 +30,12 @@ const UserProfile = (props) => {
   } = props.match;
 
   useEffect(() => {
-    console.log("key",props)
 
+    const cancel = axios.CancelToken.source();
+    trackPromise(
       axios
-        .post("/app/getUser", { username: profile }) 
+        .post("/app/getUser", { username: profile}, {cancelToken:cancel.token}) 
         .then((res) => {
-         // localStorage.setItem("content", JSON.stringify(res.data));
           setData(res.data);
         })
         .catch((e) => {
@@ -46,12 +46,11 @@ const UserProfile = (props) => {
           } else {
             Alert.error(e.response.statusText,5000)
           }
-          //console.log()
         })
+    )
   
     return () => {
-      console.log("unmounting...");
-      setData({})
+      cancel.cancel()
     };
   }, [user]);
 

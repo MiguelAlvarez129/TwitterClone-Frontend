@@ -7,20 +7,18 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
   const auth = useSelector((state) => state.user.isAuth);
   const location = useLocation();
   const from = location.state?.from
-
-
   const getState = () =>{
     if (from == "/compose/tweet"){
       return {background:{pathname:"/compose/tweet"}}
     }
   }
-  const state = getState()
+
   return (
     <Route
 
       {...rest}
       render={(props) => {
-          console.log(location,"PRIVATE")
+
           return !auth ?
           (
           
