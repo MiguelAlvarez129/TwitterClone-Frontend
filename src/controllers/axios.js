@@ -9,6 +9,7 @@ import {
 } from "../redux/slices/authSlice";
 import {updateDone,updatePosts} from "../redux/slices/postSlice"
 import { trackPromise } from "react-promise-tracker";
+import { clearData } from "../redux/slices/dataSlice";
  
 export const registerUser = async (user, history) => {
   try {
@@ -83,6 +84,7 @@ export const likePost = (data,dispatch) =>{
   return axios
     .post("/app/likePost",data)
     .then(res => {
+      dispatch(clearData())
       dispatch(updatePosts())
     })
     .catch(err => console.log(err))
@@ -95,6 +97,7 @@ export const createPost = (dispatch,data) =>{
       .then((res) => {
         console.log(res)
         Alert.success(res.data.message, 3000);
+        dispatch(clearData())
         dispatch(updatePosts())
       })
       .catch((error) => {
@@ -110,6 +113,7 @@ export const createRetweet = (data,dispatch) =>{
     .post("/app/retweet",data)
     .then((res)=> {
       Alert.success(res.data.message,3000);
+      dispatch(clearData())
       dispatch(updatePosts())      
     })
 }

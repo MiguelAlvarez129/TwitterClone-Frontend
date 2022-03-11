@@ -147,19 +147,7 @@ const Main = () => {
       )}/>
     )
   }
-  const PublicRoutes = () =>{
-    return (
-      <Route render={()=>(
-        <div>
 
-          <Route exact path="/" render={(props) => <Home  {...props} auth={auth} loading={loading} />} />
-          <Route exact path="/register" render={(props)=> <Register {...props}/>} />
-          <Route exact path="/login" component={(props) => <Login {...props} />} />
-        </div>
-     
-      )}/>
-    )
-  }
   return (
     <Switch>
       <PublicRoute  exact path="/" component={Home}/>

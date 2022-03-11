@@ -26,11 +26,9 @@ const PostView = (props) => {
   }, [])
 
   useEffect(() => {
-      console.log(location)
       const prueba = () =>{
           return  new Promise(resolve => setTimeout(() => resolve("Done!"),10000000))
         }
-        console.log(tweetId,"TWEET")
         trackPromise(
           axios
             .post("/app/getSinglePost", { tweetId })
@@ -39,7 +37,6 @@ const PostView = (props) => {
               setComments(res.data.comments)
               if (update) dispatch(updateDone())
             }).catch(e => {
-              console.log(e.response)
               if (e.response.status === 404){
                 setRedirect(true)
               }
@@ -47,6 +44,7 @@ const PostView = (props) => {
         )
 
     return () =>{
+      setRedirect(false)
       dispatch(updateDone())
     }
   }, [tweetId,update]);

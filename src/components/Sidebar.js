@@ -43,7 +43,7 @@ const Sidebar = () => {
 
   const options = auth ? [
     {to:`/${user.username}`,text:"'Profile'",icon:"avatar"},
-    {to:`/home`,text:"'Messages'",icon:"envelope-o"},
+    {to:``,text:"'Messages'",icon:"envelope-o"},
     {to:`/notifications`,text:"'Notifications'",icon:"bell-o"},
   ] : 
   [

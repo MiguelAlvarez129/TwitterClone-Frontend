@@ -16,13 +16,18 @@ const Notifications = (props) =>{
   const {username}  = useSelector(state => state.user.user)
   const history = useHistory()
   useEffect(() => {
+    const cancel = axios.CancelToken.source()
     trackPromise(axios.post("/app/notifications",{username})
     .then((res)=>{
       setNotifications(res.data)
-      notificationsRead(username)
+      //notificationsRead(username)
     })
     .catch(error => console.log(error))
     )
+
+    return () =>{
+      cancel.cancel()
+    }
   }, [username])
   const redirect = (url) =>{
     history.push(url)

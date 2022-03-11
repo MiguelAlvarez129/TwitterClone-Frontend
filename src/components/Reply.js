@@ -19,9 +19,9 @@ const Reply = (props) => {
   const user = useSelector((state) => state.user.user);
   const history = useHistory();
   const location = useLocation();
-  const reply  =  location.state && location.state.reply ;
+  const reply  =  location.state?.reply ;
 
-  const tweetId = reply && reply._id;
+  const tweetId = reply?._id;
 
   
   const back = () => {

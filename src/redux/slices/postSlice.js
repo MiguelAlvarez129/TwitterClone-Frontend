@@ -5,23 +5,16 @@ const initialState = {
   update: false,
 }
 
-
 export const postSlice = createSlice({
   name:'posts',
   initialState,
-  reducers:{
+  reducers:{ 
     updateDone:(state) =>{
       state.update = false;
     },
     updatePosts:(state)=>{
       state.update = true;
     },
-    // logIn:(state,action)=>{
-    //   state.isAuth = true;
-    // },
-    // updateImage:(state,action)=>{
-    //   state.user.file = action.payload;
-    // }
   }
 })
 

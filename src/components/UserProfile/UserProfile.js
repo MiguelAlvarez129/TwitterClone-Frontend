@@ -16,8 +16,12 @@ import { useSelector } from "react-redux";
 import "react-quill/dist/quill.snow.css";
 import { useHistory, useLocation } from "react-router-dom";
 import Topbar from "../../shared/Topbar"
+import { setUserData } from "../../redux/slices/dataSlice";
+import { useDispatch } from "react-redux";
 
 const UserProfile = (props) => {
+  const  savedData = useSelector(state => state.data.data)
+  const dispatch = useDispatch()
   const user = useSelector((state) => state.user.user);
   const history = useHistory();
   const location = useLocation();
@@ -30,24 +34,28 @@ const UserProfile = (props) => {
   } = props.match;
 
   useEffect(() => {
-
     const cancel = axios.CancelToken.source();
-    trackPromise(
-      axios
-        .post("/app/getUser", { username: profile}, {cancelToken:cancel.token}) 
-        .then((res) => {
-          setData(res.data);
-        })
-        .catch((e) => {
-          setData(false)
-          if (e.response.status === 404){
-            Alert.error(e.response.statusText,5000)
-            history.push("/404")
-          } else {
-            Alert.error(e.response.statusText,5000)
-          }
-        })
-    )
+    if (savedData?.userData){
+      setData(savedData.userData)
+    } else {
+      trackPromise(
+        axios
+          .post("/app/getUser", { username: profile}, {cancelToken:cancel.token}) 
+          .then((res) => {
+            setData(res.data);
+            dispatch(setUserData(res.data))
+          })
+          .catch((e) => {
+            setData(false)
+            if (e.response.status === 404){
+              Alert.error(e.response.statusText,5000)
+              history.push("/404")
+            } else {
+              Alert.error(e.response.statusText,5000)
+            }
+          })
+      )
+    }
   
     return () => {
       cancel.cancel()
