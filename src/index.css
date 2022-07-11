@@ -25,3 +25,13 @@ code {
 .rs-loader-spin::after{
   border-color: dodgerblue transparent transparent !important;
 }
+
+.carousel-root.container{
+  margin: auto !important;
+}
+
+@media (max-width:1000px){
+    .responsive-icon{
+      display:none !important;
+    }
+  }

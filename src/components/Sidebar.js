@@ -155,7 +155,7 @@ const Sidebar = () => {
           >   
           <Sideoption flex>
               <User hidden image={user.file} username={user.username} fullname={user.fullname} small disabled /> 
-              <Icon icon="more"/>
+              <Icon icon="more" className="responsive-icon"/>
           </Sideoption>
           </Whisper>
         )}

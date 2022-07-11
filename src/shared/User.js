@@ -22,14 +22,14 @@ const User = (props) => {
             height="auto"
             style={{ maxHeight: small ? 45 : medium ? 75 : 150, cursor:"pointer"}}
           /> :
-           <Icon icon='user-circle' size='2x'/>
+           <Icon icon='user-circle' size='2x' />
           }
         </CircularFrame>
         <FlexColumn>
         <Fullname small hidden={hidden}>
           {fullname}
-        </Fullname>
         <p> {username} </p>
+        </Fullname>
         </FlexColumn>
       </Wrapper>
     </Link>
