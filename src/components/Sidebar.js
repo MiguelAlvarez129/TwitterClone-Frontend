@@ -5,6 +5,7 @@ import {
   Sideoption,
   TweetButton,
   WhiteBackground,
+  UserContainer,
 } from "../shared/styles";
 import { Link, useHistory, useLocation  } from "react-router-dom";
 import {
@@ -144,7 +145,7 @@ const Sidebar = () => {
         Tweet 
       </TweetButton>
 
-      <div style={{ margin: "auto 0px 20px",width:"80%" }}>
+      <UserContainer>
     
         {auth && (
           <Whisper
@@ -153,13 +154,13 @@ const Sidebar = () => {
           triggerRef={ref}
           speaker={<Menu onSelect={handleSelect} />}
           >   
-          <Sideoption flex>
+          <Sideoption flex user>
               <User hidden image={user.file} username={user.username} fullname={user.fullname} small disabled /> 
               <Icon icon="more" className="responsive-icon"/>
           </Sideoption>
           </Whisper>
         )}
-      </div>
+      </UserContainer>
     </>
       
     )

@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Feed from "../shared/Feed"
 import {useSelector} from "react-redux"
 import Topbar from "../shared/Topbar";
+import {BottomSpace} from "../shared/styles"
 
 const Dashboard = (props) => {
   const {_id} = useSelector(state => state.user.user)
@@ -15,6 +16,7 @@ const Dashboard = (props) => {
     <>
     <Topbar title={"Feed"}/>
     <Feed _id={_id} home />
+    <BottomSpace/>
     </>
   );
 };

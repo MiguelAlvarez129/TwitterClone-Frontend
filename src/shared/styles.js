@@ -58,6 +58,16 @@ export const Sidemenu = styled.div`
         align-items: center;
         ${props=> props.right && `display:none;`}
     }
+
+    @media (max-width:500px){
+        flex-direction:row;
+        width:100%;
+        height:60px;
+        top: calc(100% - 60px);
+        justify-content: space-between;
+        border-right: none;
+        border-top: 1px solid lightgray;
+    }
     position:sticky;
     top:0;
     z-index:50;
@@ -284,6 +294,7 @@ export const ProfileResponsive = styled.img`
 
 
 export const Wrapper = styled.div`
+
     width:auto;
     max-width:150px;
     display:flex;
@@ -299,7 +310,9 @@ export const Fullname = styled.h4`
     font-style:normal;
     font-size: ${props => props.small && '16px'};
     display:inline;
-
+    & > p{
+        font-weight:normal
+    }
     @media (max-width:1000px){
         display:${props => props.hidden && 'none'};
     }
@@ -533,7 +546,7 @@ export const PostDate = styled.p`
 export const ActionsToolbar = styled.div`
     display:flex;
     justify-content:${props => props.big ? "space-around" : "space-between"};
-    margin-right:${props => props.big ? " " : "100px"};
+
     & > div > b {
         display:${props => props.big && 'none'}
     }
@@ -563,7 +576,7 @@ export const Connector = styled.div`
     width: 2px;
     height: 100%;
     background: #ccc;
-    display: ${props => props.last && "none" }
+    display: ${props => props.last && "none" };
 `
 
 export const ReplyDiv = styled.div`
@@ -690,3 +703,29 @@ export const SadFace = styled.div`
     }
 `
 
+export const Container = styled.div`
+    @media (max-width:500px){
+        flex-direction:column
+    }
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+
+`
+
+export const UserContainer = styled.div`
+     @media (max-width:500px){
+        display:none;
+    }
+    margin-top: auto;
+    width:80%;
+`
+
+export const BottomSpace = styled.div`
+    @media (max-width:500px){
+        height:60px;
+    }
+
+`

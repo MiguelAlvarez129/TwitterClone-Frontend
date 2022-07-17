@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Route,
   useLocation,
   Switch,
-  useHistory,
-  Redirect,
 } from "react-router-dom";
 import Gallery from "./components/Gallery/Gallery";
 import Register from "./components/Register";
@@ -19,7 +17,7 @@ import Reply from "./components/Reply";
 import Notifications from "./components/Notifications/Notifications"
 import ProfileSettings from "./components/ProfileSettings/ProfileSettings"
 import "rsuite/dist/styles/rsuite-default.css";
-import { Container, Content} from "rsuite";
+import { Content} from "rsuite";
 import { setAuthToken } from "./controllers/setAuth";
 import Loading from "./shared/Loading";
 import { trackPromise } from "react-promise-tracker";
@@ -30,15 +28,14 @@ import RightMenu from "./components/RightMenu/RightMenu"
 import axios from  "axios"
 import ProtectedRoute from "./private/ProtectedRoute";
 import PublicRoute from "./private/PublicRoute";
+import { Container } from "./shared/styles";
 
 
 const Main = () => {
-  const [loading, setLoading] = useState(true)
   const auth = useSelector((state) => state.user.isAuth);
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const location = useLocation();
-  const history = useHistory();
   let background =  location.state?.background;
   axios.defaults.baseURL = process.env.REACT_APP_API_URL
   
@@ -153,21 +150,10 @@ const Main = () => {
       <PublicRoute  exact path="/" component={Home}/>
       <PublicRoute exact path="/login" component={Login}/>
       <PublicRoute exact path="/register" component={Register}/>
-      {/* <Route exact path="/" render={(props) => <Home  {...props} auth={auth} loading={loading} />} />
-      <Route exact path="/register" render={(props)=> <Register {...props}/>} />
-      <Route exact path="/login" component={(props) => <Login {...props} />} /> */}
       <Route
         render={() => (
         
-          <Container
-            style={{
-              display: "flex",
-              height: "100%",
-              width: "100%",
-              flexDirection: "row",
-              justifyContent: "center",
-            }}
-          >
+          <Container>
             <Sidebar />
             <Content style={{ maxWidth: 592 }}>
      

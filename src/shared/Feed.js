@@ -49,7 +49,7 @@ const Feed = (props) => {
 
  
   return (
-    <div>
+  <>
     {posts && posts.map((e,index) => 
     
       <Tweet {...e} key={index} noComments={false}/>
@@ -57,7 +57,7 @@ const Feed = (props) => {
     }
     { posts && !posts.length  && <h5 style={{textAlign:"center"}}>This user hasn't posted anything yet :(</h5>}
     {<Loading area="feed"/>}
-  </div>
+  </>
   );
 };
 

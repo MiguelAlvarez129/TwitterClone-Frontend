@@ -233,8 +233,8 @@ const Tweet = (props) => {
               <p>Quote tweets </p>{" "}
               
               {!!likes && (
-                <p onClick={() => redirect("likes")}>
-                  <b>{like}</b> Likes
+                <p>
+                  <b>{likes && likes.quantity}</b> Likes
                 </p>
               )}
             </Statistics>
