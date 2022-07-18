@@ -63,6 +63,7 @@ export const Sidemenu = styled.div`
         flex-direction:row;
         width:100%;
         height:60px;
+        position:fixed;
         top: calc(100% - 60px);
         justify-content: space-between;
         border-right: none;
@@ -585,6 +586,9 @@ export const ReplyDiv = styled.div`
     width:auto;
     padding: 20px 20px 10px;
     border-radius: 14px;
+    @media (max-width:600px){
+        min-width:100%;
+    }
 `
 export const Title = styled.h5`
     font-family:helvetica;
