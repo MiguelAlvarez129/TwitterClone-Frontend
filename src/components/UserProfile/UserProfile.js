@@ -36,6 +36,7 @@ const UserProfile = (props) => {
   useEffect(() => {
     const cancel = axios.CancelToken.source();
     if (savedData?.userData){
+      console.log(savedData)
       setData(savedData.userData)
     } else {
       trackPromise(
@@ -44,6 +45,8 @@ const UserProfile = (props) => {
           .then((res) => {
             setData(res.data);
             dispatch(setUserData(res.data))
+            console.log(savedData)
+
           })
           .catch((e) => {
             setData(false)

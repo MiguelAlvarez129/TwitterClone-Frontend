@@ -40,16 +40,6 @@ const Main = () => {
   axios.defaults.baseURL = process.env.REACT_APP_API_URL
   
   useEffect(() => {
-    const {pathname,state} = location
-    // if (state?.from == "/compose/tweet" ){
-    //   location.state =  {pathname:"/home"}
-    // }
-    // console.log("HEREEE!",background)
-    // if (pathname || state.from  == "/settings/profile" ){
-    //   location.state = {background:{pathname:"/home"}}
-    // }
-
-
     if (localStorage.getItem("token")) {
       setAuthToken(localStorage.getItem("token"));
       trackPromise(authenticate(dispatch));
