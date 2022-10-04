@@ -20,6 +20,7 @@ const Notifications = (props) =>{
     trackPromise(axios.post("/app/notifications",{username})
     .then((res)=>{
       setNotifications(res.data)
+      console.log(res.data)
       notificationsRead(username)
     })
     .catch(error => console.log(error))
