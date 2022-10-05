@@ -29,9 +29,7 @@ export const addPathsMiddleware = (store) => (next) => (action) =>{
 
 export const checkPath = (store) => (next) => (action) =>{
   const {data:{paths}} = store.getState();
-  if (action.type === 'user/updateUser'){
-    store.dispatch({type:"data/clearData"})
-  } else if (action.type === '@@router/LOCATION_CHANGE'){
+  if (action.type === '@@router/LOCATION_CHANGE'){
     const {location:{pathname}} = action.payload 
     if (paths.length && !checkString(paths,pathname)){
       console.log(!checkString(paths,pathname),paths,pathname)

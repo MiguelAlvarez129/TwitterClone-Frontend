@@ -31,6 +31,7 @@ const ProfileSettings = (props) => {
       axios
       .post("/app/getuser", { username }, {cancelToken:cancel.token})
       .then((res) => {
+            console.log(username,"HERE!")
             setLoading(false)
             setPic(res.data.file)
             setBg(res.data.bg)
@@ -52,7 +53,7 @@ const ProfileSettings = (props) => {
     .then(res => {
       Alert.success("User data updated",5000);
       dispatch(updateUser({file:pic,fullname:e.fullname}))
-      history.push(`/${user.username}`);
+      history.goBack();
     })
     .catch(err =>console.log(err))
   }
