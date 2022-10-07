@@ -10,14 +10,37 @@ import {
 import {updateDone,updatePosts} from "../redux/slices/postSlice"
 import { trackPromise } from "react-promise-tracker";
 import { clearData } from "../redux/slices/dataSlice";
- 
+import useSWR from 'swr'
+import {useEffect, useState} from 'react'
+import { useForm } from "react-hook-form";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL
 
-export const registerUser = async (user) => {
-  const url = "/app/register";
-  const fetcher = url => axios.post(url,user).then(res => res.data)
-  return {url, fetcher}
+
+export const useRegisterForm = () => {
+  const [error,setError] = useState(null)
+  const [data,setData] = useState(null)
+  const sendForm = (body) => axios.post("/app/register",body)
+  .then((res)=>{
+    if (res.status === 400){
+      setError(res.data)
+    } else {
+      setData(res.data)
+    }
+  })
+  .catch(err => {
+    console.log(err.response)
+    if (err.status === 409){
+      setError(err.response.data)
+    } else {
+      setError(err)
+    }
+  })
+ useEffect(()=>{
+  sendForm()
+ },[])
+
+  return {error,data,sendForm}
 };
 
 export const loginUser = (user, history,dispatch, setLoading) => {

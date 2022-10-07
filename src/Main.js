@@ -5,7 +5,7 @@ import {
   Switch,
 } from "react-router-dom";
 import Gallery from "./components/Gallery/Gallery";
-import Register from "./components/Register";
+import Register from "./components/Register/Register";
 import Login from "./components/Login";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./private/Dashboard";
@@ -37,7 +37,7 @@ const Main = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   let background =  location.state?.background;
-  axios.defaults.baseURL = process.env.REACT_APP_API_URL
+  axios.defaults.baseURL = process.env.REACT_APP_API_URL || "http://localhost:5000"
   
   useEffect(() => {
     const {pathname,state} = location

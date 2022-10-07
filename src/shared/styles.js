@@ -429,7 +429,7 @@ export const Logo = styled.div`
     background-position:center;    
 `
 export const BackgroundImg = styled.div`
-    height:100vh;
+    min-height:100vh;
     background-image:url(${background});
     background-size:cover;
     background-color:lightskyblue;
@@ -438,7 +438,7 @@ export const BackgroundImg = styled.div`
 `
 export const PurpleDiv = styled.div`
     float:right;
-    height:100%;
+    height:100vh;
     width:400px;
     background:rgba(75, 0, 130, 0.7);
     box-shadow:-8px 10px 13px 1px rgba(20,0,0,0.68);
