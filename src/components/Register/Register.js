@@ -12,14 +12,18 @@ import {
 } from "rsuite";
 import { BackgroundImg} from "../../shared/styles";
 import RegisterForm from "./RegisterForm/RegisterForm";
+import {useAxios} from "../../controllers/useAxios";
 
 
 
 const Register = (props) => {
-  const {data,error,sendForm} = useRegisterForm()
-  const onSubmit = async (e) => {
-    await sendForm(e)
-    console.log(data,error)
+  const {data,error,loading,sendReq} = useAxios('/app/register','POST')
+  
+  if (error){
+    console.log(error)
+  }
+  const onSubmit =  (e) => {
+    sendReq(e)
     // if (data.status == 200){
     //   Alert.success('You have been registered succesfully',5000)
     // } else {
