@@ -11,7 +11,7 @@ import {updateDone,updatePosts} from "../redux/slices/postSlice"
 import { trackPromise } from "react-promise-tracker";
 import { clearData } from "../redux/slices/dataSlice";
 import useSWR from 'swr'
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useCallback} from 'react'
 import { useForm } from "react-hook-form";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL
@@ -20,6 +20,7 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL
 export const useRegisterForm = () => {
   const [error,setError] = useState(null)
   const [data,setData] = useState(null)
+  
   const sendForm = (body) => axios.post("/app/register",body)
   .then((res)=>{
     if (res.status === 400){
@@ -36,9 +37,6 @@ export const useRegisterForm = () => {
       setError(err)
     }
   })
- useEffect(()=>{
-  sendForm()
- },[])
 
   return {error,data,sendForm}
 };

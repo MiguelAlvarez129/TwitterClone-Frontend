@@ -12,8 +12,10 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
       return {background:{pathname:"/compose/tweet"}}
     }
   }
+  console.log("HERE PROTECTED")
 
   return (
+    
     <Route
 
       {...rest}

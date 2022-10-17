@@ -1,5 +1,5 @@
-import React, { useState} from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect} from "react";
+import { Link, useHistory } from "react-router-dom";
 import { useRegisterForm } from "../../controllers/axios";
 import {
   FlexboxGrid,
@@ -12,31 +12,36 @@ import {
 } from "rsuite";
 import { BackgroundImg} from "../../shared/styles";
 import RegisterForm from "./RegisterForm/RegisterForm";
-import {useAxios} from "../../controllers/useAxios";
+import {useAxios} from "../hooks/useAxios";
+// import useAxios from 'axios-hooks'
+import { toast } from "react-toastify";
 
 
 
-const Register = (props) => {
-  const {data,error,loading,sendReq} = useAxios('/app/register','POST')
+const Register = () => {
+  const history = useHistory()
+  const {response,loading,error ,sendReq} = useAxios('app/register',"POST")
+
+  useEffect(()=>{
+    if (error && !loading){
+      const {email,username} = error.response.data
+      if (email && username){
+        toast.error('Both username and email are already taken')
+      } else if (email){
+        toast.error(email)
+      } else if (username){
+        toast.error(username)
+      }
+    } 
   
-  if (error){
-    console.log(error)
-  }
+    if (response && !loading){
+      toast.success('You have been registered successfully')
+      history.push('/login')
+    } 
+  },[response,error,loading])
+  
   const onSubmit =  (e) => {
     sendReq(e)
-    // if (data.status == 200){
-    //   Alert.success('You have been registered succesfully',5000)
-    // } else {
-    //   setLoading(false)
-    //  const {email,username} = data.response.data;
-    //   if (email){
-    //     Alert.error(email,5000)
-    //   }
-    //   if (username){
-    //     Alert.error(username,5000)
-    //   }
-
-    // }
   };
 
   return (
@@ -70,7 +75,7 @@ const Register = (props) => {
               <RegisterForm onSubmit={onSubmit}/>
             </Grid>
           </Panel>
-          {/* {loading && <Loader size="md" center backdrop/>} */}
+          {loading && <Loader size="md" center backdrop/>}
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={24}></FlexboxGrid.Item>
       </FlexboxGrid>

@@ -40,21 +40,11 @@ const Main = () => {
   axios.defaults.baseURL = process.env.REACT_APP_API_URL || "http://localhost:5000"
   
   useEffect(() => {
-    const {pathname,state} = location
-    // if (state?.from == "/compose/tweet" ){
-    //   location.state =  {pathname:"/home"}
-    // }
-    // console.log("HEREEE!",background)
-    // if (pathname || state.from  == "/settings/profile" ){
-    //   location.state = {background:{pathname:"/home"}}
-    // }
-
-
+    
     if (localStorage.getItem("token")) {
       setAuthToken(localStorage.getItem("token"));
       trackPromise(authenticate(dispatch));
     } 
-    console.log(location,auth)
   }, [auth]);
 
 
@@ -147,9 +137,11 @@ const Main = () => {
 
   return (
     <Switch>
-      <PublicRoute  exact path="/" component={Home}/>
-      <PublicRoute exact path="/login" component={Login}/>
-      <PublicRoute exact path="/register" component={Register}/>
+      <PublicRoute>
+        <Route  exact path="/" component={Home}/>
+        <Route exact path="/login" component={Login}/>
+        <Route exact path="/register" component={Register}/>
+      </PublicRoute>
       <Route
         render={() => (
         

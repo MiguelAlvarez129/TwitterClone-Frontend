@@ -1,23 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { loginUser } from "../controllers/axios";
 import { Input } from "../shared/styles";
 import { FlexboxGrid, Panel, Col, Button, Grid, Row, Icon, Tag, Loader } from "rsuite";
-import { useDispatch } from "react-redux";
 import { BackgroundImg } from "../shared/styles";
+import { useAxios } from "./hooks/useAxios";
+import { toast } from "react-toastify";
+import { useAuth } from "./hooks/useAuth";
 
-
-
-const Login = (props) => {
-  const { register, handleSubmit, errors, setValue } = useForm({defaultValues:{username:"@"}});
-  const dispatch = useDispatch();
+const Login = () => {
+  const { register, handleSubmit, errors, setValue } = useForm();
+  const {response,error,loading,sendReq} = useAxios('app/login','POST')
+  const {setUser} = useAuth()
   const history = useHistory();
-  const [loading,setLoading] = useState(false)
-  const onSubmit = (e) => {
-      setLoading(true)
-      loginUser(e, history, dispatch, setLoading);
 
+  useEffect(()=>{
+    if (!loading){
+      if (error){
+        const {data} = error.response
+        toast.error(data)
+      }
+
+      if (response){
+        const {user} = response.data
+        toast.success('You have logged in successfully')
+        setUser(user)
+      }
+    }
+  },[response,error,loading])
+
+  const onSubmit = (e) => {
+      sendReq(e)
   };
 
   return (
@@ -72,10 +85,12 @@ const Login = (props) => {
                       placeholder="Username"
                       name="username"
                       onChange={(e) => {
-                        if (!e.target.value.length){
-                          setValue("username","@")
-                        } else {
-                          setValue("username",e.target.value)
+                        const {value} = e.target
+                        if (value[0] !== "@"){
+                          setValue("username","@" + e.target.value)
+                        } 
+                        if (value === ""){
+                          setValue("username","")
                         }
                       }}
                       error={errors.username}

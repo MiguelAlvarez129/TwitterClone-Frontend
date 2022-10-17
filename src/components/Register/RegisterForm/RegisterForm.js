@@ -11,7 +11,7 @@ import {
 } from "rsuite";
 import {validateRegister} from "../../../controllers/validate"
 const RegisterForm = (props) => {
-  const { register, handleSubmit, errors, watch, setValue } = useForm({defaultValues:{username:"@"}});
+  const { register, handleSubmit, errors, watch, setValue } = useForm();
   const [validations,setValidations] = useState(false)
   const {onSubmit} = props
   const {Bounce} = Animation
@@ -50,6 +50,7 @@ const RegisterForm = (props) => {
           fluid
           name="fullname"
           error={errors.fullname}
+          placeholder="Fullname"
           ref={register({ required: "Please enter your name" })}
         />
         {errors.fullname && (
@@ -70,11 +71,14 @@ const RegisterForm = (props) => {
           fluid
           name="username"
           error={errors.username}
-          onChange={(e)=>{
-            if(!e.target.value.length){
-              setValue("username","@")
-            } else {
-              setValue("username",e.target.value)
+          placeholder="Username"
+          onChange={(e) => {
+            const {value} = e.target
+            if (value[0] !== "@"){
+              setValue("username","@" + e.target.value)
+            } 
+            if (value === ""){
+              setValue("username","")
             }
           }}
           ref={register(
@@ -105,6 +109,7 @@ const RegisterForm = (props) => {
           fluid
           name="email"
           error={errors.email}
+          placeholder="Email"
           ref={register({
             required: "Email is required",
             pattern: {
@@ -149,6 +154,7 @@ const RegisterForm = (props) => {
           fluid
           name="password"
           error={errors.password}
+          placeholder="Password"
           ref={register({
             required: "Password is required",
             minLength: {
@@ -190,6 +196,7 @@ const RegisterForm = (props) => {
           fluid
           name="password2"
           error={errors.password2}
+          placeholder="Confirm Password"
           ref={register({
             required: "Password confirmation is required",
             validate: {
