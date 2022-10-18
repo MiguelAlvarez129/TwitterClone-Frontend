@@ -8,12 +8,11 @@ import { useAxios } from "./hooks/useAxios";
 import { toast } from "react-toastify";
 import { useAuth } from "./hooks/useAuth";
 
-const Login = () => {
+const Login = (props) => {
   const { register, handleSubmit, errors, setValue } = useForm();
   const {response,error,loading,sendReq} = useAxios('app/login','POST')
   const {setUser} = useAuth()
   const history = useHistory();
-
   useEffect(()=>{
     if (!loading){
       if (error){

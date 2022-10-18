@@ -41,17 +41,20 @@ const Main = () => {
   
   useEffect(() => {
     
-    if (localStorage.getItem("token")) {
-      setAuthToken(localStorage.getItem("token"));
-      trackPromise(authenticate(dispatch));
-    } 
-  }, [auth]);
+    const {pathname,state} = location
+    console.log(state)
+    // if (localStorage.getItem("token")) {
+    //   setAuthToken(localStorage.getItem("token"));
+    //   trackPromise(authenticate(dispatch));
+    // } 
+  }, [location.pathname]);
 
 
   
   useEffect(() => {
 
-    const {pathname} = location
+    const {pathname,state} = location
+    console.log(state)
     if(auth){
       userOnline(user.username)
       if (pathname == "/notifications" ){
@@ -137,11 +140,9 @@ const Main = () => {
 
   return (
     <Switch>
-      <PublicRoute>
-        <Route  exact path="/" component={Home}/>
-        <Route exact path="/login" component={Login}/>
-        <Route exact path="/register" component={Register}/>
-      </PublicRoute>
+      <PublicRoute exact path="/" component={Home}/>
+      <PublicRoute exact path="/login" component={Login}/>
+      <PublicRoute exact path="/register" component={Register}/>
       <Route
         render={() => (
         

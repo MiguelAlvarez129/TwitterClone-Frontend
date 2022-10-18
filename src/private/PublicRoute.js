@@ -10,7 +10,6 @@ const PublicRoute = ({ component: Component, children, ...rest }) => {
   const history = useHistory()
   const location = useLocation();
   const {state} = location
-  console.log("HERE NOT PROTECTED")
 
   useEffect(()=>{
     if (isAuth){
@@ -18,29 +17,17 @@ const PublicRoute = ({ component: Component, children, ...rest }) => {
     } 
   },[isAuth])
   return (
-    <Route>
-      {children}
-    </Route>
-    // <Route
-    //   {...rest}
-    //   render={(props) => {
-
-    //       return auth ? (
-    //         <Redirect to={
-    //         {
-    //           pathname:"/home",
-    //           state
-    //         }
-    //       } />
-    //     ) : (
-    //       <>
-
-    //       <Component {...props} />
-    //       <Loading fullWidth/>
-    //       </>
-    //     );
-    //   }}
-    // />
+    <Route
+      {...rest}
+      render={(props) => 
+         (
+          <>
+          <Component {...props} />
+          {/* <Loading fullWidth/> */}
+          </>
+        )
+      }
+    />
   );
 };
 

@@ -1,50 +1,33 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { useSelector } from "react-redux";
-import { Route, Redirect, useLocation} from "react-router-dom";
+import { Route, Redirect, useLocation, useHistory} from "react-router-dom";
+import { toast } from "react-toastify";
+import { useAuth } from "../components/hooks/useAuth";
 
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const auth = useSelector((state) => state.user.isAuth);
+  const {isAuth} = useAuth()
   const location = useLocation();
+  const history = useHistory()
   const from = location.state?.from
+
+  useEffect(()=>{
+    if (!isAuth){
+      history.push('/login')
+    }
+  },[isAuth])
+
   const getState = () =>{
     if (from == "/compose/tweet"){
       return {background:{pathname:"/compose/tweet"}}
     }
   }
-  console.log("HERE PROTECTED")
+
 
   return (
-    
     <Route
-
       {...rest}
-      render={(props) => {
-
-          return !auth ?
-          (
-          
-          <Redirect to={
-            {
-              pathname:"/",
-              state:{
-                from: props.history.location.pathname,
-              }
-            }
-          } />
-
-        ) : 
-          from ? 
-          (<Redirect to={
-            {pathname:from,
-            state:getState(),
-            }
-          }/>)
-          :
-          (
-            <Component {...props} />
-          )
-      }}
+      render={(props) => <Component {...props} />}
     />
   );
 };

@@ -14,7 +14,7 @@ const Home = (props) => {
       setLoading(false)
     }
   }, [auth])
-  console.log("HOME",location.state)
+  // console.log("HOME",location.state)
   const from =  location.state?.from || "/home" 
 
 
