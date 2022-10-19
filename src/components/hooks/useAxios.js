@@ -6,10 +6,10 @@ const axiosClient = axios.create();
 
 axiosClient.defaults.baseURL = 'http://localhost:5000';
 
-// axiosClient.defaults.headers = {
-//   'Content-Type': 'application/json',
-//   Accept: 'application/json'
-// };
+axiosClient.defaults.headers = {
+  'Content-Type': 'application/json',
+  Accept: 'application/json'
+};
 
 
 export const useAxios = (url,method) =>{
@@ -34,6 +34,15 @@ export const useAxios = (url,method) =>{
     }
   }
 
+  const setToken = (token) =>{
+    if (token){
+      axiosClient.defaults.headers['Authorization'] = 'Bearer ' + token 
+    } else {
+      axiosClient.defaults.headers['Authorization'] = ''
+    }
+    
+  }
+
   useEffect(()=>{
     if (response){
       setError(null)
@@ -44,6 +53,7 @@ export const useAxios = (url,method) =>{
     response,
     error,
     loading,
-    sendReq
+    sendReq,
+    setToken
   }
 }

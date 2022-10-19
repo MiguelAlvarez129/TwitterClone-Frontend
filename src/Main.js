@@ -37,12 +37,11 @@ const Main = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   let background =  location.state?.background;
-  axios.defaults.baseURL = process.env.REACT_APP_API_URL || "http://localhost:5000"
+  // axios.defaults.baseURL = process.env.REACT_APP_API_URL || "http://localhost:5000"
   
   useEffect(() => {
     
     const {pathname,state} = location
-    console.log(state)
     // if (localStorage.getItem("token")) {
     //   setAuthToken(localStorage.getItem("token"));
     //   trackPromise(authenticate(dispatch));
@@ -54,7 +53,7 @@ const Main = () => {
   useEffect(() => {
 
     const {pathname,state} = location
-    console.log(state)
+
     if(auth){
       userOnline(user.username)
       if (pathname == "/notifications" ){

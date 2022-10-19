@@ -52,15 +52,15 @@ const Sidebar = () => {
     {to:`/login`,text:"'Login'",icon:"sign-in"},
   ]
 
-  useEffect(()=>{
-    socket.on("notification",(value)=>{
-      setNoti(value);
-    })
+  // useEffect(()=>{
+  //   socket.on("notification",(value)=>{
+  //     setNoti(value);
+  //   })
 
-    return ()=>{
-      socket.off("notification")
-    }
-  },[])
+  //   return ()=>{
+  //     socket.off("notification")
+  //   }
+  // },[])
 
 
   useEffect(() => {

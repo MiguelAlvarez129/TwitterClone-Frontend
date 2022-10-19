@@ -14,7 +14,7 @@ import useSWR from 'swr'
 import {useEffect, useState, useCallback} from 'react'
 import { useForm } from "react-hook-form";
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL
+axios.defaults.baseURL = "http://localhost:5000"
 
 
 export const useRegisterForm = () => {

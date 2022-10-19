@@ -10,9 +10,9 @@ import { useAuth } from "./hooks/useAuth";
 
 const Login = (props) => {
   const { register, handleSubmit, errors, setValue } = useForm();
-  const {response,error,loading,sendReq} = useAxios('app/login','POST')
+  const {response,error,loading,sendReq,setToken} = useAxios('app/login','POST')
   const {setUser} = useAuth()
-  const history = useHistory();
+
   useEffect(()=>{
     if (!loading){
       if (error){
@@ -21,9 +21,10 @@ const Login = (props) => {
       }
 
       if (response){
-        const {user} = response.data
+        const {data} = response
         toast.success('You have logged in successfully')
-        setUser(user)
+        setToken(data.accessToken)
+        setUser({...data})
       }
     }
   },[response,error,loading])
