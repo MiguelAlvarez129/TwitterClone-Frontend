@@ -86,6 +86,7 @@ export const Sidemenu = styled.div`
 
 
 export const TweetButton = styled.button`
+    flex:0;
     ${props => props.top && "margin-top:120px"};
     color: ${props => props.inverted ? "dodgerblue" : "white"};
     font-family: Helvetica Neue, Arial;
@@ -318,14 +319,7 @@ export const Fullname = styled.h4`
         display:${props => props.hidden && 'none'};
     }
 `
-export const WrapperEditor = styled.div`
-    display: block;
-    margin: 0px auto;
-    max-width: 500px;
-    width:auto;
-    transition: border-color 0.5s;
-    
-`
+
 export const TextArea= styled.textarea`
     transition: border-color 0.5s;
     resize:none;
@@ -341,12 +335,10 @@ export const TextArea= styled.textarea`
     display:block;
     border-bottom:none; 
     border-radius: 6px;
-    ${props => props.border && `
     border: solid lightgray 1.5px;
 
-    `}
     &:focus{
-        ${props => props.border ? 'border:solid dodgerblue 1.5px' : "none"} 
+        border:solid dodgerblue 1.5px; 
         outline:none; 
       
     }
@@ -360,50 +352,41 @@ export const TextArea= styled.textarea`
     
 `
 
-export const Toolbar = styled.div`
-    align-items:center;
-    margin: 0 auto;
-    padding: 5px 0px;
-    border: none;
-    display:flex;
-    justify-content:space-between;
-    max-width:500px;
-    border-top:#EEE 1px solid;
 
-`
 
 export const ImageContainer = styled.div`
+    & > div {
+        overflow:hidden;
+        border-radius:10px;
+    }
     cursor:pointer;
     margin-bottom:16px;
     display: grid;
     border-radius: 20px;
-    overflow:hidden;
-    grid-template-columns: ${props => props.images.length > 1 ? `50% 50%` : `100%`};
-    ${props => props.images.length > 3 ? 
-    `grid-template-rows: 50% 50%;
-    & > div:nth-child(n+5){
-        display:none;
-    }
-    `
-    :
-    `grid-auto-rows: auto auto; 
+    width:100%;
     
-    & > div:nth-child(3){
-        grid-column-start: 1;
-        grid-column-end: 2;
-        grid-row-start: 1;
-        grid-row-end: 3;
-        height:400px;
-       
+    grid-template-columns: ${props => props.images.length > 1 ? `50% 50%` : `100%`};
+    ${props => props.images.length === 2 && `grid-template-rows: 200px;`}
+    ${props => props.images.length === 4 && `grid-template-rows: 50% 50%;`}
+    ${props => props.images.length === 3 && 
+        `grid-auto-rows: 200px 200px; 
+        
+        
+        & > div:nth-child(3){
+            grid-column-start: 1;
+            grid-column-end: 2;
+            grid-row-start: 1;
+            grid-row-end: 3;
+        }
+    
+        
+        & > div:not(:nth-child(3)) img {
+            height:200px;
+        }
+        `
     }
-    & > div:nth-child(3) img{
-        height: 400px;
-    } 
-    `
-    }
-    & > div{
-        height:200px;
-        border: #848486 solid 1px;
+    & > div img{
+       display:${props => props.images.length > 1 && 'none'};
     }
   
 `
@@ -581,13 +564,16 @@ export const Connector = styled.div`
 `
 
 export const ReplyDiv = styled.div`
+    position:relative;
     background: white;
-    min-width: 600px;
-    width:auto;
+    width: 600px;
+    max-height: ${props => props.files ? '500px' : '305px' };
     padding: 20px 20px 10px;
     border-radius: 14px;
+    overflow:auto;
+    height:${props =>  props.overflow ? '100%' : 'auto'};
     @media (max-width:600px){
-        min-width:100%;
+        height:100%;
     }
 `
 export const Title = styled.h5`
@@ -731,5 +717,28 @@ export const BottomSpace = styled.div`
     @media (max-width:500px){
         height:60px;
     }
+
+`
+
+export const Stack = styled.div`
+    height:100%;
+    width:100%;
+    display:flex;
+    justify-content:${props => props.justify || 'start'};
+    align-items:${props => props.align || 'start'};
+    flex-direction:${props => props.direction || 'row'};
+`
+
+
+export const LoaderBg = styled.div`
+    background: white;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+}
+
 
 `

@@ -3,9 +3,7 @@ import { Alert } from "rsuite";
 import { setAuthToken } from "./setAuth";
 import {
   setCurrentUser,
-  logIn,
   logOut,
-  updateImage,
 } from "../redux/slices/authSlice";
 import {updateDone,updatePosts} from "../redux/slices/postSlice"
 import { trackPromise } from "react-promise-tracker";

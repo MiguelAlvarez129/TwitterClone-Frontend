@@ -2,7 +2,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import userReducer from './slices/authSlice'
 import postReducer from './slices/postSlice'
 import dataReducer from './slices/dataSlice'
-import {loggerMiddleware,addPathsMiddleware, checkPath} from './middleware/checkRoute';
+import {addPathsMiddleware, checkPath} from './middleware/checkRoute';
 import {createBrowserHistory} from 'history'
 import {connectRouter, routerMiddleware} from 'connected-react-router'
 
@@ -18,6 +18,6 @@ export const rootReducer = (history) => combineReducers({
 
 export default configureStore({
   reducer:rootReducer(history),
-  middleware:(getDefaultMiddleware) => getDefaultMiddleware().concat( routerMiddleware(history),addPathsMiddleware,loggerMiddleware,checkPath),
+  middleware:(getDefaultMiddleware) => getDefaultMiddleware().concat( routerMiddleware(history),addPathsMiddleware,checkPath),
 })
 

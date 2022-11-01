@@ -4,31 +4,29 @@ import { useSelector } from 'react-redux'
 import User from '../../shared/User'
 import { Loader } from 'rsuite'
 import { FlexColumn, Sideoption, WhiteBackground } from '../../shared/styles'
+import {useAxios} from '../../hooks/useAxios'
+import { toast } from 'react-toastify'
 
 
 const UserList = () =>{
   
-  const auth = useSelector(state => state.user.isAuth )
+  // const auth = useSelector(state => state.user.isAuth )
   const [list,setList]= useState([])
-  const [loading,setLoading]= useState(true)
+  // const [loading,setLoading]= useState(true)
+  const {response,error,loading} = useAxios({url:'/app/users-list',method:'GET',auto:true})
 
   useEffect(() => {
-    console.log("AUTH",auth)
-    if (auth){
-      axios.get("/app/users")
-    .then((e)=>{
-      setList([...e.data])
-      setLoading(false)
-    }) 
-    }else {
-      setLoading(false)
+   if (!loading){
+    if (error){
+      toast.error('An error ocurred while getting the users list')
     }
-  }, [auth])
+   }
+  }, [response,error,loading])
 
   return (
   <>
    <h5> Some users you may want to know:</h5>
-     {list.map((e,index) => 
+     {response?.data?.map((e,index) => 
      <Sideoption  key={index} flex width="true">
       <User  image={e.pic} username={e.username} fullname={e.fullname} small />
      </Sideoption>
@@ -37,7 +35,6 @@ const UserList = () =>{
         <Loader size="md" center backdrop/>
       </WhiteBackground>}
   </>
-   
   )
 }
 

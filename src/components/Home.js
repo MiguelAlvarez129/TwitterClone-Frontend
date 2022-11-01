@@ -9,12 +9,13 @@ const Home = (props) => {
   const [loading, setLoading] = useState(true)
   const auth = useSelector((state) => state.user.isAuth);
   const location = useLocation()
-  useEffect(() => {
-    if (!localStorage.getItem("token")){
-      setLoading(false)
-    }
-  }, [auth])
+  // useEffect(() => {
+  //   if (!localStorage.getItem("token")){
+  //     setLoading(false)
+  //   }
+  // }, [auth])
   // console.log("HOME",location.state)
+  console.log('HOME ')
   const from =  location.state?.from || "/home" 
 
 

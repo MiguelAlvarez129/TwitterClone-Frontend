@@ -1,7 +1,4 @@
 
-export const loggerMiddleware = (store) => (next) => (action) => {
-  next(action)
-};
 
 const checkString = (paths,string) => {
   return paths.reduce((acc,e)=>{

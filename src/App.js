@@ -10,22 +10,23 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const toastConfig = {
   position:"top-center",
-  autoClose:5000,
+  autoClose:3000,
   hideProgressBar:false,
   newestOnTop:false,
   rtl:false,
   // draggable:false
-  pauseOnHover:false,
+  pauseOnHover:true,
+  pauseOnFocusLoss:false,
   theme:"colored"
 }
 
 const App = () => {
   return (
     <Provider store={store}>
-    <ConnectedRouter history={history}>
-          <Main/>
-          <ToastContainer {...toastConfig}/>
-    </ConnectedRouter>
+      <ConnectedRouter history={history}>
+            <Main/>
+            <ToastContainer {...toastConfig}/>
+      </ConnectedRouter>
     </Provider>
   );
 };

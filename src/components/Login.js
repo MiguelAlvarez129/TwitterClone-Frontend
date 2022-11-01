@@ -4,29 +4,36 @@ import { useForm } from "react-hook-form";
 import { Input } from "../shared/styles";
 import { FlexboxGrid, Panel, Col, Button, Grid, Row, Icon, Tag, Loader } from "rsuite";
 import { BackgroundImg } from "../shared/styles";
-import { useAxios } from "./hooks/useAxios";
+import { useAxios } from "../hooks/useAxios";
 import { toast } from "react-toastify";
-import { useAuth } from "./hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 
 const Login = (props) => {
   const { register, handleSubmit, errors, setValue } = useForm();
-  const {response,error,loading,sendReq,setToken} = useAxios('app/login','POST')
+  const {response,error,loading,sendReq} = useAxios({
+    url:'app/login',
+    method:'POST',
+    withCredentials:true,
+  })
   const {setUser} = useAuth()
 
   useEffect(()=>{
-    if (!loading){
-      if (error){
-        const {data} = error.response
-        toast.error(data)
-      }
-
-      if (response){
-        const {data} = response
-        toast.success('You have logged in successfully')
-        setToken(data.accessToken)
-        setUser({...data})
+    console.log(props.location)
+    if (!loading && error){
+      console.log(error,'ERROR')
+      if (error?.response?.data){
+        toast.error(error?.response?.data)
+      } else {
+        toast.error('An error ocurred while trying to log in')
       }
     }
+
+    if (!loading && response){
+      const {data} = response
+      toast.success('You have logged in successfully')
+      setUser({...data})
+    }
+    
   },[response,error,loading])
 
   const onSubmit = (e) => {

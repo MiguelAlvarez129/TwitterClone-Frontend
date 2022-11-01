@@ -1,6 +1,5 @@
-import { get } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
-import { getUser, setCurrentUser } from "../../redux/slices/authSlice"
+import { getUser, setCurrentUser, setAccessToken, logOut} from "../redux/slices/authSlice"
 
 
 export const useAuth = () =>{
@@ -11,11 +10,21 @@ export const useAuth = () =>{
     dispatch(setCurrentUser(user))
   }
 
+  const setToken = (token) =>{
+    dispatch(setAccessToken(token))
+  }
+
+  const setLogOut = () =>{
+    dispatch(logOut())
+  }
+  
 
   return {
     user,
     isAuth,
-    setUser
+    setUser,
+    setToken,
+    setLogOut
   }
   
 }

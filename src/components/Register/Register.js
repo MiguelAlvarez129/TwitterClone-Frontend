@@ -1,6 +1,5 @@
 import React, { useEffect} from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useRegisterForm } from "../../controllers/axios";
 import {
   FlexboxGrid,
   Panel,
@@ -12,7 +11,7 @@ import {
 } from "rsuite";
 import { BackgroundImg} from "../../shared/styles";
 import RegisterForm from "./RegisterForm/RegisterForm";
-import {useAxios} from "../hooks/useAxios";
+import {useAxios} from "../../hooks/useAxios"; 
 // import useAxios from 'axios-hooks'
 import { toast } from "react-toastify";
 
@@ -20,7 +19,10 @@ import { toast } from "react-toastify";
 
 const Register = () => {
   const history = useHistory()
-  const {response,loading,error ,sendReq} = useAxios('app/register',"POST")
+  const {response,loading,error ,sendReq} = useAxios({
+    url:'app/register',
+    method:'POST'
+  })
 
   useEffect(()=>{
     if (error && !loading){

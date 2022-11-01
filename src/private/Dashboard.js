@@ -6,12 +6,6 @@ import {BottomSpace} from "../shared/styles"
 
 const Dashboard = (props) => {
   const {_id} = useSelector(state => state.user.user)
-  // useEffect(() => {
-  //   console.log("MOUNTED")
-  //   return () => {
-  //     console.log("UNMOUNTED")
-  //   };
-  // }, []);
   return (
     <>
     <Topbar title={"Feed"}/>

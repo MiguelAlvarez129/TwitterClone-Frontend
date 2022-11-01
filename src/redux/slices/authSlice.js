@@ -15,12 +15,12 @@ export const userSlice = createSlice({
       state.user = action.payload;
       state.isAuth = true;
     },
+    setAccessToken:(state,action) => {
+      state.user = {...state.user,accessToken: action.payload}
+    },
     logOut:(state)=>{
       state.user = {};
       state.isAuth = false;
-    },
-    logIn:(state,action)=>{
-      state.isAuth = true;
     },
     updateUser:(state,action)=>{
       const {file, fullname} = action.payload;
@@ -30,7 +30,7 @@ export const userSlice = createSlice({
 })
 
 
-export const {setCurrentUser,logOut,logIn,updateUser} = userSlice.actions;
+export const {setCurrentUser,logOut,setAccessToken,updateUser} = userSlice.actions;
 export const getUser = (state) => state.user
 
 export default userSlice.reducer
