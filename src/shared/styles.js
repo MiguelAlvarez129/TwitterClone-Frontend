@@ -361,16 +361,18 @@ export const ImageContainer = styled.div`
     }
     cursor:pointer;
     margin-bottom:16px;
-    display: grid;
-    border-radius: 20px;
+    display: ${props => props.images.length ? 'grid' : 'none'};
     width:100%;
-    
+    background: lightgray;
+    padding: 2px;
+    grid-gap: 2px;
+    margin-top: 5px;
+    border-radius: 10px;
     grid-template-columns: ${props => props.images.length > 1 ? `50% 50%` : `100%`};
     ${props => props.images.length === 2 && `grid-template-rows: 200px;`}
     ${props => props.images.length === 4 && `grid-template-rows: 50% 50%;`}
     ${props => props.images.length === 3 && 
         `grid-auto-rows: 200px 200px; 
-        
         
         & > div:nth-child(3){
             grid-column-start: 1;
@@ -379,7 +381,6 @@ export const ImageContainer = styled.div`
             grid-row-end: 3;
         }
     
-        
         & > div:not(:nth-child(3)) img {
             height:200px;
         }

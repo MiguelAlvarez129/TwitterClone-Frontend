@@ -19,7 +19,6 @@ export const useRefreshToken = () =>{
         if (error?.response?.status === (401 || 403)) {
           toast.error('You are unauthorized to view this content')
         }
-        else toast.error('An error ocurred while refreshing token')
         setLogOut()
         // else if (error?.response?.status === 403) toast.warning('Your session has expired')
       }

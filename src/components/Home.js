@@ -6,7 +6,6 @@ import { BackgroundImg, PurpleDiv, WhiteBackground } from "../shared/styles"
 import { useSelector } from "react-redux";
 import axios from 'axios'
 const Home = (props) => {
-  const [loading, setLoading] = useState(true)
   const auth = useSelector((state) => state.user.isAuth);
   const location = useLocation()
   // useEffect(() => {
@@ -19,11 +18,7 @@ const Home = (props) => {
   const from =  location.state?.from || "/home" 
 
 
-  return auth ? <Redirect to={
-    {
-      pathname: from,
-    }
-  } />:(
+  return (
       <>
       <BackgroundImg>
         <PurpleDiv>
@@ -41,10 +36,10 @@ const Home = (props) => {
           </div>
         </PurpleDiv>
       </BackgroundImg>  
-      {loading && 
+      {/* {loading && 
         <WhiteBackground home>
       <Loader backdrop size="md"/> 
-        </WhiteBackground>}
+        </WhiteBackground>} */}
 </>
       
  

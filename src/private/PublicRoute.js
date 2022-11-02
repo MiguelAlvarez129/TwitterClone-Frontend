@@ -16,7 +16,7 @@ const PublicRoute = ({ component: Component, children, ...rest }) => {
       render={() => 
         isAuth ?  
         <Redirect
-          to={location?.state?.from}
+          to={location?.state?.from || '/home'}
         />
         : 
          (
