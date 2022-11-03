@@ -288,7 +288,6 @@ const Tweet = (props) => {
               </FlexColumn>
             </div>
           </PostPanel>
-          <RegisterMessage show={show} close={close} />
         </>
       )}
     </>

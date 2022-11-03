@@ -1,12 +1,12 @@
 import React from "react";
-import { CircularFrame, Wrapper, Fullname, FlexColumn } from "../shared/styles";
+import { CircularFrame, Wrapper, Fullname, FlexColumn, Stack } from "../shared/styles";
 import { Link } from "react-router-dom";
 import { Icon } from "rsuite";
 const User = (props) => {
   const { image, username, fullname, hidden, small, medium, disabled} = props;
   return (
     <Link
-      onClick={(e)=> disabled && e.preventDefault()}
+      onClick={(e)=> e.stopPropagation()}
       to={`/${username}`}
       style={{
         color: "gray",
@@ -25,12 +25,12 @@ const User = (props) => {
            <Icon icon='user-circle' size='2x' />
           }
         </CircularFrame>
-        <FlexColumn>
-        <Fullname small hidden={hidden}>
-          {fullname}
-        <p> {username} </p>
-        </Fullname>
-        </FlexColumn>
+        {/* <Stack>
+          <Fullname small hidden={hidden}>
+            {fullname}
+          <p> {username} </p>
+          </Fullname>
+        </Stack> */}
       </Wrapper>
     </Link>
   );

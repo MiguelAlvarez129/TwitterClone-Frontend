@@ -49,78 +49,6 @@ const Main = () => {
   //   } 
   // }, [auth]);
 
- 
-const AuthRoutes = (props) => {
-    return (
-        <>
-           <Switch location={background || location}>
-                <Route
-                  exact
-                  path="/home"
-                  render={(props) => <Dashboard {...props} />}
-                />
-                <Route
-                  exact
-                  path="/404"
-                  render={(props) => <NotFound {...props} />}
-                />
-                <Route
-                  exact
-                  path="/notifications"
-                  render={(props)=> <Notifications {...props}/>}
-                />
-                 <Route
-                  exact
-                  path="/settings/profile"
-                  render={(props) => (<Dashboard {...props} />)}
-                /> 
-                <Route
-                  exact
-                  path="/compose/tweet"
-                  render={(props) => <Dashboard {...props} />}
-                />
-                <Route 
-                  exact 
-                  path="/:profile" 
-                  render={(props)=> (<UserProfile {...props} key={props.location.key}/>)} />
-                <Route
-                  exact
-                  path="/:profile/:tweetId/gallery"
-                  render={(props) => <PostView {...props} />}
-                />
-                <Route
-                  exact
-                  path="/:profile/:tweetId"
-                  render={(props) => <PostView {...props} />}
-                /> 
-           </Switch>
-              {background && (
-                <Route
-                  exact 
-                  path="/compose/tweet"
-                  render={(props) => <Reply {...props} />}
-                />
-              )}
-              {background && (
-                <Route
-                  exact
-                  path="/settings/profile"
-                  render={(props) => <ProfileSettings {...props} />}
-                />
-              )}
-              {background && (
-                <Route
-                  exact
-                  path="/:profile/:tweetId/gallery"
-                  render={(props) => <Gallery {...props} />}
-                />
-              )}
-        </>
-
-    
-    )
-  }
-
   return loading ? <Loading/> : ( 
     <Switch>
       <PublicRoute exact path="/" component={Home}/>
@@ -168,7 +96,7 @@ const AuthRoutes = (props) => {
                 />
                 <Route
                   exact
-                  path="/:profile/:tweetId"
+                  path="/:username/:_id"
                   render={(props) => <PostView {...props} />}
                 /> 
            </Switch>

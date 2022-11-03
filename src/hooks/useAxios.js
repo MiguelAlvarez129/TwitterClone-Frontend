@@ -14,7 +14,7 @@ axiosClient.defaults.headers = {
 
 export {axiosClient}
 
-export const useAxios = ({url,method,auto = false,withCredentials = false, multipart = false}) =>{
+export const useAxios = ({url,method,auto = false,withCredentials = false, multipart = false, params = null}) =>{
   const { isAuth, user:{accessToken}, setToken} = useAuth();
   const [response,setResponse] = useState(null)
   const [error,setError] = useState(null)

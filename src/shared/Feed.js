@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {Loader, Modal, Icon} from "rsuite"
-import Tweet from "./Tweet";
+import {Loader} from "rsuite"
+// import Tweet from "./Tweet";
+import Tweet from "../components/Tweet/Tweet";
 import axios from "axios";
 import { useParams, Link, useHistory, useLocation } from "react-router-dom";
 import { useSelector, useDispatch} from "react-redux";
@@ -65,13 +66,9 @@ const Feed = (props) => {
   }
   return (
   <>
-    {response && response?.data.map((e,index) => 
-    
-      <Tweet {...e} key={index} noComments={false}/>
-    )
-    }
-    { response && !response?.data.length && noTweetMsg()}
-    {/* {loading && <Loading area="feed"/>} */}
+    {response?.data.map((e,index) => <Tweet {...e} key={index} />)}
+    {!loading && !response?.data?.length && noTweetMsg()}
+    {loading && <Loader center backdrop size="md"/>}
   </>
   );
 };
