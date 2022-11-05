@@ -57,7 +57,6 @@ const Reply = () => {
     for(let {file} of files){
       form.append('files',file)
     }
-    console.log(form.get('files'))
     sendReq(form)
   }
 

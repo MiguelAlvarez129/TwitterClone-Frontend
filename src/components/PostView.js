@@ -23,16 +23,13 @@ const PostView = (props) => {
   const {response,error,loading} = useAxios({url:'app/get-tweet/' + _id, method:'GET', auto:true})
 
   useEffect(()=>{
-    console.log(_id)
     if (!loading && error){
-      console.log(error?.response)
       if (error?.response?.status === 404){
         toast.error('This tweet doesn\'t seem to exist')
       } else {
         toast.error('An error ocurred while retrieving the tweet')
       }
     }
-    console.log(response?.data)
   },[response,error,loading])
   // useEffect(() => {
  

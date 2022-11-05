@@ -91,28 +91,17 @@ const Sidebar = () => {
   
   const openTweet = (e) => {
     e.stopPropagation()
-    if (!auth){
-      open()
-    } else {
-      history.push({
-        pathname:`/compose/tweet`,
-        state:{
-          background:location,
-        }
-      })
-    }
+    history.push({
+      pathname:`/compose/tweet`,
+      state:{
+        background:location,
+      }
+    })
+    
   }
 
   const handleSelect = () =>{
     ref.current.hide()
-  }
-
-  const open = () =>{
-    setShow(true)
-  }
-
-  const close = () =>{
-    setShow(false)
   }
 
   const logout = () => {
@@ -168,8 +157,6 @@ const Sidebar = () => {
 
   return  (
     <Sidemenu>
-  
-      <RegisterMessage show={show} close={close}/>
        <MenuContents/>
       {loading && <WhiteBackground width="310">
         <Loader size="md" center backdrop/>

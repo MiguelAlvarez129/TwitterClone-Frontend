@@ -91,7 +91,7 @@ const Main = () => {
                   render={(props)=> (<UserProfile {...props} key={props.location.key}/>)} />
                 <Route
                   exact
-                  path="/:profile/:tweetId/gallery"
+                  path="/:username/:_id/gallery"
                   render={(props) => <PostView {...props} />}
                 />
                 <Route
@@ -117,7 +117,7 @@ const Main = () => {
               {background && (
                 <Route
                   exact
-                  path="/:profile/:tweetId/gallery"
+                  path="/:username/:_id/gallery"
                   render={(props) => <Gallery {...props} />}
                 />
               )}

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Divider, Dropdown, Icon } from 'rsuite';
+import LikeButton from '../../../shared/LikeButton';
 import { Stack } from '../../../shared/styles';
 import { ToolbarContainer, ToolbarButton } from '../tweet.styles';
 
@@ -14,8 +15,8 @@ const TweetToolbar = (props) => {
           </Stack>
         <Divider/>
       </>
-    }
-      <ToolbarContainer big={props.big} onClick={(e) => e.stopPropagation()}>
+      }
+      <ToolbarContainer onClick={(e) => e.stopPropagation()}>
         <div>
           <ToolbarButton
             icon={<Icon icon="comment-o" size="3x" />}
@@ -46,26 +47,27 @@ const TweetToolbar = (props) => {
             }}
             noCaret
           >
-            {/* <Dropdown.Item icon={<Icon icon="retweet" />} >
+            <Dropdown.Item icon={<Icon icon="retweet" />} >
               {" "}
-              {undo ? "Undo retweet" : "Retweet"}
+              Retweet
             </Dropdown.Item>
             <Dropdown.Item icon={<Icon icon="edit2" />}>
               {" "}
               Quote Tweet
-            </Dropdown.Item> */}
+            </Dropdown.Item>
           </Dropdown>
           {/* <b>{rq}</b> */}
         </div>
         <div>
-          <ToolbarButton
+          {/* <ToolbarButton
             icon={<Icon icon="heart-o" />}
             appearance="subtle"
             // onClick={() => redirect("like")}
             circle
             type={"red"}
             size="lg"
-          />
+          /> */}
+          <LikeButton {...props} />
           {/* <b>{likes && likes.quantity}</b> */}
         </div>
         <ToolbarButton

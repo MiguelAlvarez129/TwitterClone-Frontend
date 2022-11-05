@@ -53,9 +53,15 @@ const getColor = (type) =>{
   }
 }
 export const ToolbarButton = styled(IconButton)`
-  &:hover{
+
+  ${props => props.selected && getColor(props.type).split(';')[0]};
+  &:active,&:focus,&:active:focus{
+    ${props => props.selected && getColor(props.type).split(';')[0]};
+  }
+  &:hover{ 
       ${({ type }) =>getColor(type)}
   }
+  
 `
 export const ToolbarContainer = styled.div`
     display:flex;
@@ -64,6 +70,11 @@ export const ToolbarContainer = styled.div`
     & > div > b {
         display:${props => props.big && 'none'}
     }
+`
+
+export const ToolbarCounter = styled.p`
+    display:inline;
+    ${props => props.selected && getColor(props.type).split(';')[0]};
 `
 
 export const HeaderContainer = styled.div`

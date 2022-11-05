@@ -4,6 +4,7 @@ import { Stack, Fullname } from '../../shared/styles'
 import User from '../../shared/User'
 import TweetToolbar from './TweetToolbar/TweetToolbar'
 import TweetHeader from './TweetHeader/TweetHeader'
+import TweetGallery from './TweetGallery/TweetGallery'
 import { useHistory } from 'react-router-dom'
 const Tweet = (props) => {
   const history = useHistory();
@@ -12,7 +13,6 @@ const Tweet = (props) => {
     e.stopPropagation()
     !extended && history.push(`/${username}/${_id}`)
   }
- 
   return ( 
     <TweetContainer onClick={onClick} extended={extended}>
       <Stack> 
@@ -22,12 +22,13 @@ const Tweet = (props) => {
           <TweetContent extended={extended}>
             {props.content}
           </TweetContent>
-          {extended && 
+        </Stack>
+      </Stack>
+      {!!props.files.length && <TweetGallery {...props}/>}
+      {extended && 
           <p>
             {props.date}
           </p>}
-        </Stack>
-      </Stack>
       <TweetToolbar {...props}/>
     </TweetContainer>
   )
