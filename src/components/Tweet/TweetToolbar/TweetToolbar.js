@@ -1,17 +1,20 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom';
 import { Divider, Dropdown, Icon } from 'rsuite';
 import LikeButton from '../../../shared/LikeButton';
 import { Stack } from '../../../shared/styles';
-import { ToolbarContainer, ToolbarButton } from '../tweet.styles';
+import { ToolbarContainer, ToolbarButton, ToolbarCounter } from '../tweet.styles';
 
 const TweetToolbar = (props) => {
+  const {comments} = props;
+  const history = useHistory();
   return (
     <>
       {props.extended && 
       <>
         <Divider/>
           <Stack >
-            Retweet Likes
+            Retweet Likes {props.likes.length}
           </Stack>
         <Divider/>
       </>
@@ -21,12 +24,20 @@ const TweetToolbar = (props) => {
           <ToolbarButton
             icon={<Icon icon="comment-o" size="3x" />}
             appearance="subtle"
-            // onClick={() => redirect("comment")}
+            onClick={() => history.push({
+              pathname:'/compose/tweet',
+              state:{
+                reply: props, 
+                background: history.location, 
+              }
+            })}
             circle
             type={"blue"}
             size="lg"
           />
-          {/* <b>{comments && comments.length}</b> */}
+         <ToolbarCounter type={"blue"}>
+          {comments.length}
+          </ToolbarCounter>
         </div>
         <div>
           <Dropdown
@@ -59,16 +70,7 @@ const TweetToolbar = (props) => {
           {/* <b>{rq}</b> */}
         </div>
         <div>
-          {/* <ToolbarButton
-            icon={<Icon icon="heart-o" />}
-            appearance="subtle"
-            // onClick={() => redirect("like")}
-            circle
-            type={"red"}
-            size="lg"
-          /> */}
           <LikeButton {...props} />
-          {/* <b>{likes && likes.quantity}</b> */}
         </div>
         <ToolbarButton
           icon={<Icon icon="share" />}

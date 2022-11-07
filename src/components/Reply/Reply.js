@@ -22,16 +22,16 @@ import ModalDiv from "../../shared/ModalDiv/ModalDiv";
 import { useAxios } from "../../hooks/useAxios";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import Tweet from "../Tweet/Tweet";
 
 const Reply = () => {
   const [files,setFiles] = useState([])
   const [value,setValue] = useState('')
   const user = useSelector((state) => state.user.user);
   const history = useHistory();
-  // const location = useLocation();
-  // const reply  = location.state?.reply;
+  const location = useLocation();
+  const reply = location.state?.reply;
   const {response,error,loading,sendReq} = useAxios({url:'/app/create-tweet',method:'POST',multipart: true})
-  // const tweetId = reply?._id;
 
   const del = (index) =>{
     setFiles(files => files.filter((e,i) => i !== index)) 
@@ -40,7 +40,7 @@ const Reply = () => {
   useEffect(()=>{
     if (!loading){
       if (response){
-        toast.success('Tweet added')
+        toast.success(reply ? 'Tweet replied' : 'Tweet added!')
         history.goBack()
       }
 
@@ -53,6 +53,7 @@ const Reply = () => {
   const onSubmit = () => {
     const form = new FormData()
     form.append('type','tweets')
+    if (reply) form.append('reply',reply._id)
     form.append('content',value)
     for(let {file} of files){
       form.append('files',file)
@@ -73,8 +74,11 @@ const Reply = () => {
               onClick={()=> history.goBack()}
             />
         <Divider style={{ margin: "0px -20px 20px" }} />
+        {reply && <Tweet {...reply} reply extended={false}/>}
           <Stack>
+        
             <User image={user.file} small />
+         
             <Stack direction={'column'}>
               <TextArea value={value} onChange={(e) => setValue(e.target.value)}
               maxLength={160}
@@ -95,7 +99,7 @@ const Reply = () => {
                 </ImageContainer>
               <Toolbar>
                 <UploadButton setFiles={setFiles} files={files}/> 
-                {value && <Progress.Circle style={{width:30}} percent={value.length} showInfo={false} trailWidth={10}/>}
+                {value && <Progress.Circle style={{width:30,marginRight:15}} percent={value.length * 100 / 160} showInfo={false} trailWidth={10}/>}
                 <TweetButton disabled={!value && !files.length} onClick={onSubmit}>
                   Tweet
                 </TweetButton>
@@ -104,54 +108,6 @@ const Reply = () => {
           </Stack>
         </ModalDiv>
       </Stack>
-      {/* <FlexCenter>
-        <ReplyDiv onClick={(e) => e.stopPropagation()}>
-          <IconButton
-            style={{ margin: "-15px -15px 0px" }}
-            appearance="subtle"
-            icon={<Icon icon="close" style={{ color: "dodgerblue" }} />}
-            circle
-            size="lg"
-            onClick={back}
-          />
-
-          <Divider style={{ margin: "0px -20px 20px" }} />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              margin: 0,
-              padding: 0,
-            }}
-          >
-            {reply && (
-              <div style={{ display: "flex" }}>
-                <FlexColumn>
-                  <User image={reply.image} small />
-                  <Connector />
-                </FlexColumn>
-                <FlexColumn>
-                  <PostHeader>
-                    {reply.username}
-                    <PostDate>{reply.date.slice(0, 11)}</PostDate>
-                  </PostHeader>  
-                  <PostContent>{reply.content}</PostContent>
-                  <p> Replying to {reply.username}</p>
-                </FlexColumn>
-              </div>
-            )}
-            <div style={{ display: "flex" }}>
-              <User image={user.file} small />
-              <div style={{ width: "100%" }}>
-                <Editor
-                  close={back}
-                  tweetId={tweetId}
-                />
-              </div> 
-            </div>
-          </div>
-        </ReplyDiv>
-      </FlexCenter> */}
     </BackDrop>
   );
 };

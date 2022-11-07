@@ -8,11 +8,11 @@ import { toast } from "react-toastify";
 import GalleryCarousel from "./GalleryCarousel/GalleryCarousel";
 import GallerySidebar from "./GallerySidebar/GallerySidebar";
 import { CustomIcon } from "./gallery.styles";
+import TweetToolbar from "../Tweet/TweetToolbar/TweetToolbar";
 
 const Gallery = (props) => {
   const [drawer,setDrawer] = useState(true)
   const [data, setData] = useState([]);
-  const [like, setLike] = useState(0);
   const { _id} = useParams();
   const history = useHistory();
   const location = useLocation();
@@ -60,8 +60,8 @@ const Gallery = (props) => {
             onClick={back}
           />
           {!loading && <GalleryCarousel files={response?.data?.files}/>}
-         
-          <BottomToolbar>
+          {response &&  <TweetToolbar  {...response?.data} />}
+          {/* <BottomToolbar>
             <IconButton
               icon={<Icon icon="comment" />}
               size="lg"
@@ -90,7 +90,7 @@ const Gallery = (props) => {
               appearance="subtle"
               circle
             />
-          </BottomToolbar>
+          </BottomToolbar> */}
           <IconButton
           style={{
             position: "absolute",

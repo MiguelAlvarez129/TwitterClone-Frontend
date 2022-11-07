@@ -2,14 +2,13 @@ import { IconButton } from 'rsuite'
 import styled, { css , keyframes }  from 'styled-components'
 
 export const TweetContainer = styled.div`
-  padding: 10px;
-  transition: background 0.25s;
-  border-bottom:1px solid lightgray;
-  cursor: ${props => !props.extended ? "pointer" : "default"};
-  ${props => props.extended && "border-bottom:1px solid lightgray;"}
+transition: background 0.25s;
+cursor: ${props => !props.extended && !props.reply ? "pointer" : "default"};
+${props => !props.reply  && "border-bottom:1px solid lightgray;"}
+${props => !props.reply ? "padding: 10px;" : "padding-bottom:20px;"}
 
   &:hover{
-    ${props => !props.extended && "background: #f0f0f0;"}
+    ${props => !props.extended && !props.reply && "background: #f0f0f0;" }
   }
 `
 export const TweetHeader = styled.div`
@@ -58,8 +57,11 @@ export const ToolbarButton = styled(IconButton)`
   &:active,&:focus,&:active:focus{
     ${props => props.selected && getColor(props.type).split(';')[0]};
   }
-  &:hover{ 
+  &:hover { 
       ${({ type }) =>getColor(type)}
+      & + p {
+        ${({ type }) => getColor(type).split(';')[0]}
+      }
   }
   
 `
@@ -74,6 +76,8 @@ export const ToolbarContainer = styled.div`
 
 export const ToolbarCounter = styled.p`
     display:inline;
+    font-weight:bold;
+    transition: color .5s;
     ${props => props.selected && getColor(props.type).split(';')[0]};
 `
 

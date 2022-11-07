@@ -8,13 +8,13 @@ import TweetGallery from './TweetGallery/TweetGallery'
 import { useHistory } from 'react-router-dom'
 const Tweet = (props) => {
   const history = useHistory();
-  const {author:{username},_id,extended} = props;
+  const {author:{username},_id,extended, reply} = props;
   const onClick = (e) =>{
     e.stopPropagation()
-    !extended && history.push(`/${username}/${_id}`)
+    !reply && !extended && history.push(`/${username}/${_id}`)
   }
   return ( 
-    <TweetContainer onClick={onClick} extended={extended}>
+    <TweetContainer onClick={onClick} extended={extended} reply={reply}>
       <Stack> 
       {!extended && <User {...props.author} small/>}   
         <Stack direction={'column'}>
@@ -29,7 +29,7 @@ const Tweet = (props) => {
           <p>
             {props.date}
           </p>}
-      <TweetToolbar {...props}/>
+      {!reply && <TweetToolbar {...props}/>}
     </TweetContainer>
   )
 }

@@ -7,7 +7,7 @@ import { useAxios } from '../hooks/useAxios'
 const LikeButton = ({_id,...props}) => {
   const [likes,setLikes] = useState(props.likes);
   const {user:{id}} = useAuth();
-  const {response,error,loading,sendReq} = useAxios({url:'app/like-tweet',method:'PATCH',auto:true})
+  const {response,error,loading,sendReq} = useAxios({url:'app/like-tweet',method:'PATCH'})
   
   useEffect(()=>{
     if (!loading && response){

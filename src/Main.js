@@ -87,7 +87,7 @@ const Main = () => {
                 />
                 <Route 
                   exact 
-                  path="/:profile" 
+                  path="/:username" 
                   render={(props)=> (<UserProfile {...props} key={props.location.key}/>)} />
                 <Route
                   exact
@@ -97,7 +97,7 @@ const Main = () => {
                 <Route
                   exact
                   path="/:username/:_id"
-                  render={(props) => <PostView {...props} />}
+                  render={(props) => <PostView {...props} key={props.location.key}/>}
                 /> 
            </Switch>
               {background && (
