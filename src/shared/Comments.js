@@ -11,7 +11,7 @@ const Comments = (props) => {
     params: { _id },
   } = match;
   // const { noComments } = props;
-  const {response,error,loading} = useAxios({url:'/app/get-comments/' + _id ,method:'GET',auto:true})
+  const {response,error,loading} = useAxios({url:'/app/get-comments/' + _id ,method:'GET',auto:true,key:'comments'})
   useEffect(()=>{
     if (!loading && error){
       toast.error('An error ocurred while retrieving the comments')
@@ -34,7 +34,7 @@ const Comments = (props) => {
   // }, [props.comments]);
   return (
     <>
-    {loading && <Loader center size="md" />}
+    {loading && <Loader size="md" style={{marginTop:50,width:'100%',textAlign:'center'}} />}
     {!loading && response?.data.map((tweet,index)=>(
 
       <Tweet {...tweet} key={index} />

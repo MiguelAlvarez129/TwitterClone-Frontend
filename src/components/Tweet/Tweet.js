@@ -1,6 +1,6 @@
 import React from 'react'
 import { TweetContainer, TweetContent } from './tweet.styles'
-import { Stack, Fullname } from '../../shared/styles'
+import { Stack } from '../../shared/styles'
 import User from '../../shared/User'
 import TweetToolbar from './TweetToolbar/TweetToolbar'
 import TweetHeader from './TweetHeader/TweetHeader'

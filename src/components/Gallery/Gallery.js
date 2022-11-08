@@ -10,13 +10,13 @@ import GallerySidebar from "./GallerySidebar/GallerySidebar";
 import { CustomIcon } from "./gallery.styles";
 import TweetToolbar from "../Tweet/TweetToolbar/TweetToolbar";
 
-const Gallery = (props) => {
+const Gallery = () => {
   const [drawer,setDrawer] = useState(true)
   const [data, setData] = useState([]);
   const { _id} = useParams();
   const history = useHistory();
   const location = useLocation();
-  const {response,error,loading} = useAxios({url:'app/get-tweet/' + _id, method:'GET', auto:true})
+  const {response,error,loading} = useAxios({url:'app/get-tweet/' + _id, method:'GET', auto:true, key:'tweet'})
 
   useEffect(()=>{
     if (!loading && error){
@@ -61,36 +61,6 @@ const Gallery = (props) => {
           />
           {!loading && <GalleryCarousel files={response?.data?.files}/>}
           {response &&  <TweetToolbar  {...response?.data} />}
-          {/* <BottomToolbar>
-            <IconButton
-              icon={<Icon icon="comment" />}
-              size="lg"
-
-              onClick={e => openComment(e)}
-              circle
-            />
-            <IconButton
-              icon={<Icon icon="retweet" />}
-              size="lg"
-            
-              circle
-            />
-            <div>
-            <IconButton
-              icon={<Icon icon="heart" />}
-              size="lg"
-              circle
-            />
-            <b>{like}</b>
-            </div>
-            
-            <IconButton
-              icon={<Icon icon="share" />}
-              size="lg"
-              appearance="subtle"
-              circle
-            />
-          </BottomToolbar> */}
           <IconButton
           style={{
             position: "absolute",

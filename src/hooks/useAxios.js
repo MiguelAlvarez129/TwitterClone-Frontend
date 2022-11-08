@@ -2,6 +2,7 @@ import React, {useState,useRef} from 'react'
 import axios from 'axios'
 import { useEffect } from 'react';
 import { useAuth } from './useAuth';
+import {useRefresh} from './useRefresh';
 
 const axiosClient = axios.create();
 
@@ -14,13 +15,14 @@ axiosClient.defaults.headers = {
 
 export {axiosClient}
 
-export const useAxios = ({url,method,auto = false,withCredentials = false, multipart = false}) =>{
+export const useAxios = ({url,method,auto = false,withCredentials = false, multipart = false, key = null, invalidateKey = null}) =>{
   const { isAuth, user:{accessToken}, setToken} = useAuth();
   const [response,setResponse] = useState(null)
   const [error,setError] = useState(null)
   const [loading,setLoading] = useState(false)
   const mounted = useRef(true)
   const controller = new AbortController()
+  const [keys,setKeys] = useState({})
   
   const getStaticFiles = async () => {
     try {
@@ -68,6 +70,8 @@ export const useAxios = ({url,method,auto = false,withCredentials = false, multi
       if (mounted.current) setLoading(false)
     }
   }
+
+  const { setAxiosKey,invalidateAxiosKey} = useRefresh(key,sendReq)
 
   useEffect(()=>{
     const responseIntercept = axiosClient.interceptors.response.use(
@@ -123,6 +127,17 @@ export const useAxios = ({url,method,auto = false,withCredentials = false, multi
     }
   },[])
 
+  useEffect(()=>{
+    if (!loading && response){
+      if (key){
+        setAxiosKey(key)
+      } 
+      if (invalidateKey){
+        invalidateAxiosKey(invalidateKey)
+      }
+    } 
+
+  },[response,loading])
   return {
     response,
     error,
