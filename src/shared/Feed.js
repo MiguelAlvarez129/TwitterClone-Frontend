@@ -14,15 +14,10 @@ import { useAxios } from "../hooks/useAxios";
 import { toast } from "react-toastify";
 
 const Feed = (props) => {
-  const location = useLocation()
-  const update = useSelector(state => state.post.update)
-  const {data} = useSelector(state => state.data)
-  const user = useSelector(state => state.user.user)
-  const dispatch = useDispatch()
-  const { _id, home} = props;
+  const {username} = props;
   const {response,error,loading} = useAxios({
     // new props => renderize/change => cleanup => new effect
-    url:home ?  '/app/feed' : '/app/getUserTweets',
+    url:!username ?  '/app/feed' : '/app/get-user-tweets/' + username ,
     method:'GET',
     auto:true
   })
@@ -31,34 +26,10 @@ const Feed = (props) => {
       toast.error('An error ocurred while fetching the feed data')
     }
   },[response,error,loading])
-  // useEffect(() => { 
 
-    
-  //   if (data?.posts){
-  //     setPosts([...data.posts])
-  //   } else {
-  //     if (_id != undefined) {
-  //       trackPromise(  axios.post(url, { userId:_id },{cancelToken:cancel.token}).then((res) => {
-  //         setPosts(res.data)
-  //         setLoading(false)
-  //         dispatch(saveData({posts:[...res.data]}))
-  //         if (update){
-  //         dispatch(updateDone())
-  //         }
-  //       }),"feed")
-  //     }
-  //   }
-
-  //   return () =>{
-  //     cancel.cancel()
-  //     if (update){
-  //       dispatch(updateDone())
-  //       }
-  //   }
-  // }, [_id,update,user]);
 
   const noTweetMsg = () => {
-    if (home){
+    if (!username){
       return <h5 style={{textAlign:"center"}}> There's no tweets at the moment</h5>
     } else {
       return <h5 style={{textAlign:"center"}}>This user hasn't posted anything yet :(</h5>

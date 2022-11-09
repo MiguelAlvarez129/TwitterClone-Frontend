@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { Fullname, Stack } from '../../../shared/styles';
+import { Stack } from '../../../shared/styles';
 import User from '../../../shared/User';
 import { HeaderContainer, Title } from '../tweet.styles'
 

@@ -87,7 +87,7 @@ export const Sidemenu = styled.div`
 
 export const TweetButton = styled.button`
     flex:0;
-    ${props => props.top && "margin-top:120px"};
+    max-height: 48px;
     color: ${props => props.inverted ? "dodgerblue" : "white"};
     font-family: Helvetica Neue, Arial;
     font-size: ${props => props.small? "14px" : "20px"};
@@ -259,8 +259,8 @@ export const CircularFrame = styled.button`
     margin:0 5px;
     /* border:0.5px solid #03fcb5 ; */
     border-radius:50% ;
-    height: ${props => props.small ? '45px' : props.medium ? '75px' : '150px' };
-    width: ${props => props.small ? '45px' : props.medium ? '75px' : '150px' };;
+    height: ${props => props.small ? '45px' : '150px' };
+    width: ${props => props.small ? '45px'  : '150px' };
     line-height: inherit;
     box-sizing: border-box;
     text-indent: 0px;
@@ -276,11 +276,6 @@ export const CircularFrame = styled.button`
     
     &:hover > .overlay{
         background: #57575761;
-    }
-
-    @media (max-width:600px){
-        height:${props => props.hidden && '100px'};
-        width:${props => props.hidden && '100px'};
     }
     
 `
@@ -444,12 +439,7 @@ export const BackDrop = styled.div`
     background: rgba(0, 0, 0, 0.5);
     z-index: 200;
 `
-export const FlexContainer = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    height: 100%;
-`
+
 export const GalleryContainer = styled.div`
     display:flex;
     flex-direction:column;
@@ -457,23 +447,6 @@ export const GalleryContainer = styled.div`
     width: 100%;
     position: relative;
     justify-content:flex-end;
-`
-
-export const CarouselContainer = styled.div`
-    width: auto;
-    margin: -30px auto;
-    min-width: 10%;
-    max-width: 100vh;
-    height: 100%;
-`
-
-export const BottomToolbar = styled.div`
-    width: 50vw;
-    margin: 0 auto;
-    position: sticky;
-    bottom: 0;
-    display: flex;
-    justify-content: space-around;
 `
 
 export const PostPanel = styled.div`
@@ -512,31 +485,6 @@ export const PostContent = styled.p`
     }
 `
 
-export const PostHeader = styled.div`
-    align-items:baseline;
-    color: black;
-    font-family: Helvetica;
-    font-size: 15px;
-    display: flex;
-    justify-content:flex-start;
-    align-items:center;
-`
-
-export const PostDate = styled.p`
-    font-size:15px;
-    margin-left: 5px;
-    color:gray;
-`
-
-export const ActionsToolbar = styled.div`
-    display:flex;
-    justify-content:${props => props.big ? "space-around" : "space-between"};
-
-    & > div > b {
-        display:${props => props.big && 'none'}
-    }
-
-`
 export const FlexColumn = styled.div`
     flex:none;
     display:flex;
@@ -599,21 +547,6 @@ export const TopBar = styled.div`
 export const TopWrapper = styled.div`
     height:57px;
 
-`
-
-export const Statistics = styled.div`
-    font-family: Helvetica;
-    font-size: 15px;
-
-    & > p{
-        margin:0 10px;
-        display: inline-block;
-    }
-
-    & > p:hover{
-        text-decoration:underline;
-    }
-    
 `
 
 export const StyledDiv = styled(Divider)`

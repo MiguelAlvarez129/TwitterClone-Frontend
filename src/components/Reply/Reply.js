@@ -4,12 +4,6 @@ import User from "../../shared/User";
 import { useSelector } from "react-redux";
 import {
   BackDrop,
-  PostContent,
-  PostHeader,
-  PostDate,
-  FlexCenter,
-  FlexColumn,
-  Connector,
   Stack,
   TextArea,
   ImageContainer,
