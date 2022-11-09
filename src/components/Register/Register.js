@@ -6,13 +6,11 @@ import {
   Col,
   Grid,
   Icon,
-  Alert,
   Loader
 } from "rsuite";
 import { BackgroundImg} from "../../shared/styles";
 import RegisterForm from "./RegisterForm/RegisterForm";
 import {useAxios} from "../../hooks/useAxios"; 
-// import useAxios from 'axios-hooks'
 import { toast } from "react-toastify";
 
 
