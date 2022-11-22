@@ -1,61 +1,77 @@
 import React, { useRef, useState, useEffect } from "react";
-import { BackDrop } from "../../shared/styles";
+import { BackDrop, Stack } from "../../shared/styles";
 import { IconButton, Divider, Icon, Grid, Col , Row, Loader, Tag, Alert} from "rsuite";
-import { ReplyDiv, FlexCenter, TextArea, CustomRow, Bg, Input, TweetButton} from "../../shared/styles";
+import { ReplyDiv, FlexCenter, TextArea, CustomRow, Bg, Input, TweetButton,} from "../../shared/styles";
 import ProfilePic from "../../shared/ProfilePic"
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux"
 import {updateUser} from "../../redux/slices/authSlice"
 import { useForm } from "react-hook-form";
-import { trackPromise } from "react-promise-tracker";
 import axios from "axios"
+import { useAxios } from "../../hooks/useAxios";
+import { useAuth } from "../../hooks/useAuth";
+import { toast } from "react-toastify";
+import ModalDiv from "../../shared/ModalDiv/ModalDiv";
 
 
 const ProfileSettings = (props) => {
   const history = useHistory();
   const dispatch = useDispatch()
   const user = useSelector(state => state.user.user)
+
   const [bg, setBg] = useState();
   const [pic, setPic] = useState();
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
  // const [data, setData] = useState({});
   const ref = useRef();
   const ref2 = useRef();
   const ref3 = useRef();
   const { register, handleSubmit, errors, setValue} = useForm();
-  
+  const {user:{username}} = useAuth();
+  const {response,error,loading} = useAxios({url:`app/get-user/${username}`,method:'GET',auto:true})
   useEffect(() => {
-    const cancel = axios.CancelToken.source();
-    const {username} = user;
-    if (username){
-      axios
-      .post("/app/getuser", { username }, {cancelToken:cancel.token})
-      .then((res) => {
-            console.log(username,"HERE!")
-            setLoading(false)
-            setPic(res.data.file)
-            setBg(res.data.bg)
-            setValue("fullname",res.data.fullname)
-            setValue("bio",res.data.bio)
-           
-          })
-          .catch((error) => console.log(error))
+    if (!loading){
+      if (response){
+        console.log(response)
+      }
+      if (error){
+        console.log(error)
+        toast.error('An error ocurred while retrieving the profile\'s settings')
+      }
     }
-    return () => {
-      cancel.cancel()
-    };
-  }, [user]);
+  },[response,error,loading])
+  // useEffect(() => {
+  //   const cancel = axios.CancelToken.source();
+  //   const {username} = user;
+  //   if (username){
+  //     axios
+  //     .post("/app/getuser", { username }, {cancelToken:cancel.token})
+  //     .then((res) => {
+  //           console.log(username,"HERE!")
+  //           setLoading(false)
+  //           setPic(res.data.file)
+  //           setBg(res.data.bg)
+  //           setValue("fullname",res.data.fullname)
+  //           setValue("bio",res.data.bio)
+           
+  //         })
+  //         .catch((error) => console.log(error))
+  //   }
+  //   return () => {
+  //     cancel.cancel()
+  //   };
+  // }, [user]);
   const onSubmit = (e) =>{
-    const {username} = user
-    const data = {...e,pic,bg,username}
-    setLoading(true)
-    axios.put("/app/usersettings",data)
-    .then(res => {
-      Alert.success("User data updated",5000);
-      dispatch(updateUser({file:pic,fullname:e.fullname}))
-      history.goBack();
-    })
-    .catch(err =>console.log(err))
+    // const {username} = user
+    // const data = {...e,pic,bg,username}
+    // setLoading(true)
+    // axios.put("/app/usersettings",data)
+    // .then(res => {
+    //   Alert.success("User data updated",5000);
+    //   dispatch(updateUser({file:pic,fullname:e.fullname}))
+    //   history.goBack();
+    // })
+    // .catch(err =>console.log(err))
   }
   const back = (e) => {
     e.stopPropagation();
@@ -77,6 +93,21 @@ const ProfileSettings = (props) => {
       reader.readAsDataURL(e.target.files[0]);
     }
   };
+  return (
+    <BackDrop onMouseDown={()=> history.goBack()} onMouseUp={(e) => e.preventDefault()}>
+          <ModalDiv style={{overflow:'auto'}}  loading={loading} >
+          <IconButton
+              style={{ margin: "-15px -15px 0px" }}
+              appearance="subtle"
+              icon={<Icon icon="close" style={{ color: "dodgerblue" }} />}
+              circle
+              size="lg"
+              onClick={()=> history.goBack()}
+            />
+            <Divider style={{ margin: "0px -20px 20px" }} />
+          </ModalDiv>
+    </BackDrop>
+  )
   return loading ?  
   <BackDrop onClick={back}>
       <FlexCenter top>

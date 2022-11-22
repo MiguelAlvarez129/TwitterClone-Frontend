@@ -57,7 +57,7 @@ const Reply = () => {
 
   return (
     <BackDrop onMouseDown={()=> history.goBack()} onMouseUp={(e) => e.preventDefault()} >
-      <Stack justify={'center'} align={'center'}>
+      {/* <Stack justify={'center'} align={'center'}> */}
         <ModalDiv style={{overflow:'auto'}} files={files.length} loading={loading} >
           <IconButton
               style={{ margin: "-15px -15px 0px" }}
@@ -101,7 +101,7 @@ const Reply = () => {
             </Stack>
           </Stack>
         </ModalDiv>
-      </Stack>
+      {/* </Stack> */}
     </BackDrop>
   );
 };

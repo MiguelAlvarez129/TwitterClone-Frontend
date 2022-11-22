@@ -438,6 +438,9 @@ export const BackDrop = styled.div`
     right: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 export const GalleryContainer = styled.div`
@@ -516,11 +519,12 @@ export const ReplyDiv = styled.div`
     position:relative;
     background: white;
     width: 600px;
-    max-height: ${props => props.files ? '500px' : '305px' };
+    // max-height: ${props => props.files ? '500px' : '305px' };
     padding: 20px 20px 10px;
     border-radius: 14px;
     overflow:auto;
-    height:${props =>  props.overflow ? '100%' : 'auto'};
+    height:${props =>  props.$overflow ? '100%' : 'auto'};
+   
     @media (max-width:600px){
         height:100%;
     }

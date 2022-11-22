@@ -17,7 +17,6 @@ export const useRefresh = (key,sendReq) => {
 
   useEffect(()=>{
     if (key && keys[key] === true){
-      console.log('hereee!')
       sendReq()
     }
   },[keys])
