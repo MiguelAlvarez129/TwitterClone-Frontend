@@ -91,7 +91,7 @@ const UserProfile = (props) => {
       </ProfileContainer>
     {loading && <Loader size="md" center/>}
     {!loading && <UserProfileContent {...response?.data}/>} 
-    <Feed username={username}/>
+    {!loading && response?.data && <Feed username={username}/>}
     </div>
 
     // <CustomGrid fluid>

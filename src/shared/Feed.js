@@ -19,7 +19,8 @@ const Feed = (props) => {
     // new props => renderize/change => cleanup => new effect
     url:!username ?  '/app/feed' : '/app/get-user-tweets/' + username ,
     method:'GET',
-    auto:true
+    auto:true,
+    key:'feed'
   })
   useEffect(()=>{
     if(!loading && error){
