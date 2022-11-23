@@ -8,6 +8,7 @@ const ProfilePic = (props) => {
       onClick={onClick}
       hidden={hidden}
       style={{ cursor: "pointer" }}
+      type="button"
     >
      <div className="overlay"/>
 

@@ -3,17 +3,9 @@ import { CircularFrame, Wrapper, Fullname, FlexColumn, Stack } from "../shared/s
 import { Link } from "react-router-dom";
 import { Icon } from "rsuite";
 const User = (props) => {
-  const { image, username, fullname, hidden, small, medium, disabled} = props;
+  const { image, username, small, medium} = props;
   return (
-    <Link
-      onClick={(e)=> e.stopPropagation()}
-      to={`/${username}`}
-      style={{
-        color: "gray",
-        textDecoration: "none",
-        pointerEvents: username == undefined ? "none" : "auto",
-      }}
-    >
+
       <Wrapper>
         <CircularFrame small={small} medium={medium}>
           {image ? <img
@@ -22,17 +14,11 @@ const User = (props) => {
             height="auto"
             style={{ maxHeight: small ? 45 : medium ? 75 : 150, cursor:"pointer"}}
           /> :
-           <Icon icon='user-circle' size='2x' />
+           <Icon icon='user-circle' size='2x'/>
           }
         </CircularFrame>
-        {/* <Stack>
-          <Fullname small hidden={hidden}>
-            {fullname}
-          <p> {username} </p>
-          </Fullname>
-        </Stack> */}
       </Wrapper>
-    </Link>
+
   );
 };
 

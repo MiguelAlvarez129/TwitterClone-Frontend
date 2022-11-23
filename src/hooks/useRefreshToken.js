@@ -16,7 +16,8 @@ export const useRefreshToken = () =>{
       }
 
       if (error){
-        if (error?.response?.status === (401 || 403)) {
+        console.log(error.response)
+        if (error?.response?.status === 401 || 400) {
           toast.error('You are unauthorized to view this content')
         }
         setLogOut()

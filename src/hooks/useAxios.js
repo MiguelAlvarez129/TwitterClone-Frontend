@@ -22,7 +22,6 @@ export const useAxios = ({url,method,auto = false,withCredentials = false, multi
   const [loading,setLoading] = useState(false)
   const mounted = useRef(true)
   const controller = new AbortController()
-  const [keys,setKeys] = useState({})
   
   const getStaticFiles = async () => {
     try {
@@ -76,7 +75,8 @@ export const useAxios = ({url,method,auto = false,withCredentials = false, multi
   useEffect(()=>{
     const responseIntercept = axiosClient.interceptors.response.use(
       response => {
-        if (response.config?.responseType === 'blob' && Array.isArray(url)){
+        console.log(response.config?.responseType,response.config?.url)
+        if (response.config?.responseType === 'blob'){
           if (typeof(response.data) !== 'string'){
             response.data = URL.createObjectURL(response.data);
           } 

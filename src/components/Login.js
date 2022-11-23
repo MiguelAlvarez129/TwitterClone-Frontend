@@ -20,7 +20,6 @@ const Login = (props) => {
   useEffect(()=>{
     console.log(props.location)
     if (!loading && error){
-      console.log(error,'ERROR')
       if (error?.response?.data){
         toast.error(error?.response?.data)
       } else {

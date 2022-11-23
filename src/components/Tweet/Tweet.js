@@ -5,7 +5,7 @@ import User from '../../shared/User'
 import TweetToolbar from './TweetToolbar/TweetToolbar'
 import TweetHeader from './TweetHeader/TweetHeader'
 import TweetGallery from './TweetGallery/TweetGallery'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 const Tweet = (props) => {
   const history = useHistory();
   const {author:{username},_id,extended, reply} = props;
@@ -16,9 +16,13 @@ const Tweet = (props) => {
   return ( 
     <TweetContainer onClick={onClick} extended={extended} reply={reply}>
       <Stack> 
-      {!extended && <User {...props.author} small/>}   
+      {!extended && 
+        <Link to={`/${username}`} onClick={e => e.stopPropagation()} style={{textDecoration:'none'}}>
+          <User {...props.author} small/>
+        </Link>
+          }   
         <Stack direction={'column'}>
-          <TweetHeader {...props} />
+          <TweetHeader {...props} /> 
           <TweetContent extended={extended}>
             {props.content}
           </TweetContent>

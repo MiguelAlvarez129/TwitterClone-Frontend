@@ -15,7 +15,6 @@ const UploadButton = ({setFiles,files}) => {
     } 
     if (event.target.files.length >= 1) {
       for (const file of event.target.files) {
-        console.log(file)
         promises.push(
           new Promise((resolve) => {
             const reader = new FileReader();

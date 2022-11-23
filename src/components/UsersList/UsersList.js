@@ -1,18 +1,14 @@
-import React,{useEffect,useState} from 'react'
-import axios from 'axios'
-import { useSelector } from 'react-redux'
+import React,{useEffect} from 'react'
 import User from '../../shared/User'
 import { Loader } from 'rsuite'
-import { FlexColumn, Sideoption, WhiteBackground } from '../../shared/styles'
+import { Sideoption, Stack, WhiteBackground } from '../../shared/styles'
 import {useAxios} from '../../hooks/useAxios'
 import { toast } from 'react-toastify'
+import { Title } from '../Tweet/tweet.styles'
+import { Link } from 'react-router-dom'
 
 
 const UserList = () =>{
-  
-  // const auth = useSelector(state => state.user.isAuth )
-  const [list,setList]= useState([])
-  // const [loading,setLoading]= useState(true)
   const {response,error,loading} = useAxios({url:'/app/users-list',method:'GET',auto:true})
 
   useEffect(() => {
@@ -26,10 +22,26 @@ const UserList = () =>{
   return (
   <>
    <h5> Some users you may want to know:</h5>
-     {response?.data?.map((e,index) => 
-     <Sideoption  key={index} flex width="true">
-      <User  image={e.pic} username={e.username} fullname={e.fullname} small />
+     {response?.data?.map(({fullname,username},index) => 
+     <Link
+     to={`/${username}`}
+     key={index}
+     style={{ textDecoration: "none", color: "black" }}
+      >
+     <Sideoption key={index}>
+       <Stack>
+          <User small/>
+          <Stack direction={"column"}>
+          <Title>
+            {fullname}
+          </Title>
+          <p>
+          @{username}
+          </p>
+          </Stack>
+        </Stack>
      </Sideoption>
+   </Link>
      )}
     {loading && <WhiteBackground width="400">
         <Loader size="md" center backdrop/>

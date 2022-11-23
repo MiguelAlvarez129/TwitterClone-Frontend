@@ -140,7 +140,9 @@ export const Sideoption = styled.div`
     & p{
         font-size:14px;
         font-weight:normal;
+        color:black
     }
+
     @media (max-width:1000px){
         &::after{
         content: '';
@@ -150,9 +152,7 @@ export const Sideoption = styled.div`
 
     }
 
-    &:focus{
-        color:dodgerblue
-    }
+
     &:hover{
     background: rgba(30, 144, 255,0.1);
     color:dodgerblue;
@@ -265,6 +265,7 @@ export const CircularFrame = styled.button`
     box-sizing: border-box;
     text-indent: 0px;
     overflow:hidden;
+    color:gray;
     & > .overlay{
         transition: background 0.5s;
         position: absolute;
