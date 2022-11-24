@@ -7,40 +7,21 @@ import { Col, Divider, Grid, Icon, IconButton, Row, Tag } from 'rsuite';
 import ProfilePic from '../../../shared/ProfilePic';
 import { Input, Stack, TextArea, TweetButton } from '../../../shared/styles';
 import { Bg } from '../profileSettings.styles';
+import ProfileSettingsImages from '../ProfileSettingsImages/ProfileSettingsImages';
 
 const ProfileSettingsForm = (props) => {
-  const {onSubmit} = props;
+  const {onSubmit,initialValues} = props;
   const history = useHistory();
-  const bg = useRef();
-  const profile = useRef();
-  const [data, setData] = useState({});
   const { register , reset, handleSubmit, errors} = useForm();
   
   useEffect(()=>{
+    const {fullname,bio} = initialValues;
     reset({
-      ...data
+      fullname,bio
     })
-  },[data])
+  },[initialValues])
 
-  const upload = async (event,key) => {
-    const file = event.target.files[0]
-    console.log(file)
-    if (event.target.files[0]) {
-      const reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = () => {
-        setData(state =>
-          ({
-            [key]:{image:reader.result,file},...state
-          })
-        )};
-
-      reader.onerror = () =>{
-        toast.error('An error ocurred while loading the images')
-      }
-    }
-      
-  };
+ 
  
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -59,7 +40,8 @@ const ProfileSettingsForm = (props) => {
       </Stack>
     <Divider style={{ margin: "0px -20px 20px" }} />
     <Grid fluid>
-      <Row>
+      <ProfileSettingsImages />
+      {/* <Row>
         <Bg image={data.bg?.image} bottom>
           <Stack justify={'center'} align={'center'}>  
             <IconButton
@@ -90,7 +72,7 @@ const ProfileSettingsForm = (props) => {
           type="file"/>
           <ProfilePic hidden src={data.profile?.image} onClick={() => profile.current.click()}/>
         </Col>
-      </Row>
+      </Row> */}
       <Row>
         <Col xs={4}>
           <label htmlFor="fullname">
@@ -125,49 +107,8 @@ const ProfileSettingsForm = (props) => {
           />
         </Col>
       </Row>
-        {/* <form onSubmit={handleSubmit(onSubmit)}>
-        <CustomRow>
-        
-        <Col xs={4}>
-        <label htmlFor="fullname">
-        <h5 style={{marginTop:18}}>Fullname</h5>
-        </label>
-        </Col>
-        <Col xs={19}>
-        <Input
-        fluid
-        name="fullname"
-        error={errors.fullname}
-        ref={register({ required: "fullname can't be blank" })}
-        />
-        </Col>
-        <Col xsOffset={4}>
-        {errors.fullname && (
-          <Tag color="red">{errors.fullname.message}</Tag>
-          )}
-          </Col>
-          </CustomRow>
-          <CustomRow>
-          <Col xsOffset={2} xs={2}>
-          <label htmlFor="bio">
-          <h5>Bio</h5>
-          </label>
-          </Col>
-          <Col xs={19}>
-          <TextArea
-          name="bio"
-          border
-          fontSmall
-          maxLength="150"
-          placeholder="What's on your mind?"
-          ref={register}
-          />
-          </Col>
-          </CustomRow>
-          <button style={{display:"none"}} ref={ref2} type="submit"/>
-        </form> */}
-      </Grid>
-      </form>
+    </Grid>
+  </form>
   )
 }
 
