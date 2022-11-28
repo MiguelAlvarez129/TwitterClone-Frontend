@@ -10,5 +10,5 @@ export const Bg = styled.div`
     background-image:${props => props.image && `url(${props.image})` };
     background-size:cover;
     background-repeat:no-repeat;
-    background-position:inherit;
+    background-position:center;
 ` 

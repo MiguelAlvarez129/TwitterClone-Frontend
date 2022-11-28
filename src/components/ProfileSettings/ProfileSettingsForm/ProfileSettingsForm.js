@@ -3,17 +3,31 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Col, Divider, Grid, Icon, IconButton, Row, Tag } from 'rsuite';
+import { Col, Divider, Grid, Icon, IconButton, Loader, Row, Tag } from 'rsuite';
+import { useAxios } from '../../../hooks/useAxios';
 import ProfilePic from '../../../shared/ProfilePic';
 import { Input, Stack, TextArea, TweetButton } from '../../../shared/styles';
 import { Bg } from '../profileSettings.styles';
 import ProfileSettingsImages from '../ProfileSettingsImages/ProfileSettingsImages';
 
 const ProfileSettingsForm = (props) => {
-  const {onSubmit,initialValues} = props;
+  const {initialValues} = props;
+  const [data,setData] = useState({})
   const history = useHistory();
   const { register , reset, handleSubmit, errors} = useForm();
-  
+  const {response,error,loading,sendReq} = useAxios({url:'/app/update-profile-settings',multipart:true,method:'PATCH'})
+
+  useEffect(()=>{
+    if (!loading){
+      if (response){
+        toast.success('Your profile settings have been updated successfully')
+      }
+      if (error){
+        toast.error('An error ocurred while trying to update your profile settings')
+      }
+    }
+  },[response,loading,error])
+
   useEffect(()=>{
     const {fullname,bio} = initialValues;
     reset({
@@ -21,7 +35,19 @@ const ProfileSettingsForm = (props) => {
     })
   },[initialValues])
 
- 
+  const onSubmit = (values) =>{ 
+    const form = new FormData()
+    form.append('type','profile')
+    form.append('fullname',values.fullname)
+    form.append('bio',values.bio)
+    if (data.profile?.file){
+      form.append('profile',data.profile?.file)
+    }
+    if (data.bg?.file){
+      form.append('bg',data.bg?.file)
+    }
+    sendReq(form)
+  }
  
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -34,45 +60,13 @@ const ProfileSettingsForm = (props) => {
           size="lg"
           onClick={()=> history.goBack()}
         />
-        <TweetButton small type="submit" style={{marginBottom:10}} >
+        <TweetButton small type="submit" style={{marginBottom:10}} disabled={loading} >
         Save
       </TweetButton>
       </Stack>
     <Divider style={{ margin: "0px -20px 20px" }} />
     <Grid fluid>
-      <ProfileSettingsImages />
-      {/* <Row>
-        <Bg image={data.bg?.image} bottom>
-          <Stack justify={'center'} align={'center'}>  
-            <IconButton
-              onClick={() => bg.current.click()}
-              appearance="subtle"
-              icon={<Icon icon="camera" />}
-              circle 
-              size="lg"
-              />
-            <input 
-              accept=".jpg, .jpeg, .png"
-              style={{ display: "none" }}
-              onChange={(e) => upload(e,'bg')}
-              type="file"
-              name="bg"
-              id="bg"
-              ref={bg}
-              />
-          </Stack>
-        </Bg>
-        <Col xsOffset={1} xs={10}>
-        <input
-          accept=".jpg, .jpeg, .png"
-          name="file"
-          style={{display:"none"}}
-          onChange={(e) => upload(e,'profile')}
-          ref={profile}
-          type="file"/>
-          <ProfilePic hidden src={data.profile?.image} onClick={() => profile.current.click()}/>
-        </Col>
-      </Row> */}
+      <ProfileSettingsImages data={data} setData={setData} />
       <Row>
         <Col xs={4}>
           <label htmlFor="fullname">
@@ -108,6 +102,7 @@ const ProfileSettingsForm = (props) => {
         </Col>
       </Row>
     </Grid>
+    {loading && <Loader size="md" center backdrop />}
   </form>
   )
 }

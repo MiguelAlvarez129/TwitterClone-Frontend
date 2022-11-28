@@ -275,9 +275,12 @@ export const CircularFrame = styled.button`
         background: transparent;
     }
     
+    ${props => !props.small && `
     &:hover > .overlay{
         background: #57575761;
     }
+    `}
+   
     
 `
 export const ProfileResponsive = styled.img`

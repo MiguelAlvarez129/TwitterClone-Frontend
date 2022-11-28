@@ -7,15 +7,20 @@ const ModalDiv = ({children,files,loading}) => {
   const ref = useRef();
   const [overflow,setOverflow] = useState(false)
   useEffect(()=>{
-    const resizeFunction = ()=>{
+    const resize = new ResizeObserver((entries) => resizeFunction())
+    const resizeFunction = ()=> {
       if (ref.current.scrollHeight > window.innerHeight){
         setOverflow(true)
       } else {
         setOverflow(false)
       }
     }
+    resize.observe(ref.current)
     window.addEventListener("resize",resizeFunction)
-    return () => window.removeEventListener('resize',resizeFunction)
+    return () => {
+      window.removeEventListener('resize',resizeFunction)
+      resize.disconnect()
+    }
   },[])
 
   return (

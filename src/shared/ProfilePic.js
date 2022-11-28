@@ -1,8 +1,20 @@
-import React, {useRef} from "react";
+import React, {useState} from "react";
 import { CircularFrame, ProfileResponsive, FlexCenter } from "../shared/styles";
 import {Icon} from "rsuite";
+import { useEffect } from "react";
 const ProfilePic = (props) => {
-  const { hidden, src, onClick } = props;
+  const [error,setError] = useState(false)
+  const { hidden, src, onClick, profile, small } = props;
+  const onError = (event) => {
+    if (!error){
+      setError(true)
+    }
+  }
+
+  useEffect(() => {
+    setError(false)
+  },[src])
+  
   return (
     <CircularFrame
       onClick={onClick}
@@ -11,11 +23,11 @@ const ProfilePic = (props) => {
       type="button"
     >
      <div className="overlay"/>
-
     
-      {src ? <ProfileResponsive
+      {!error ? <ProfileResponsive
         maxHeight={150}
         src={src}
+        onError={onError}
       /> :
         <Icon icon='user-circle' size='5x'/> }
     </CircularFrame>

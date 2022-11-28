@@ -6,7 +6,7 @@ import {useRefresh} from './useRefresh';
 
 const axiosClient = axios.create();
 
-axiosClient.defaults.baseURL = 'http://localhost:5000';
+axiosClient.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 axiosClient.defaults.headers = {
   'Content-Type': 'application/json',
@@ -23,28 +23,28 @@ export const useAxios = ({url,method,auto = false,withCredentials = false, multi
   const mounted = useRef(true)
   const controller = new AbortController()
   
-  const getStaticFiles = async () => {
-    try {
-      setLoading(true)
-      const response = await Promise.all(url.map((url) => axiosClient({
-        url,
-        method,
-        withCredentials,
-        responseType:'blob',
-      })))
-      if (mounted.current){
-        setResponse(response)
-        setError(null)
-      }
-    } catch (error) {
-      if (mounted.current) {
-        setError(error)
-        setResponse(null)
-      }
-    } finally {
-      if (mounted.current) setLoading(false)
-    }
-  }
+  // const getStaticFiles = async () => {
+  //   try {
+  //     setLoading(true)
+  //     const response = await Promise.all(url.map((url) => axiosClient({
+  //       url,
+  //       method,
+  //       withCredentials,
+  //       responseType:'blob',
+  //     })))
+  //     if (mounted.current){
+  //       setResponse(response)
+  //       setError(null)
+  //     }
+  //   } catch (error) {
+  //     if (mounted.current) {
+  //       setError(error)
+  //       setResponse(null)
+  //     }
+  //   } finally {
+  //     if (mounted.current) setLoading(false)
+  //   }
+  // }
 
   const sendReq = async (data = null) =>{
     try {
@@ -75,17 +75,17 @@ export const useAxios = ({url,method,auto = false,withCredentials = false, multi
   useEffect(()=>{
     const responseIntercept = axiosClient.interceptors.response.use(
       response => {
-        console.log(response.config?.responseType,response.config?.url)
-        if (response.config?.responseType === 'blob'){
-          if (typeof(response.data) !== 'string'){
-            response.data = URL.createObjectURL(response.data);
-          } 
-        }
+        // console.log(response.config?.responseType,response.config?.url,response.data)
+        // if (response.config?.responseType === 'blob'){
+        //   if (typeof(response.data) !== 'string'){
+        //     response.data = URL.createObjectURL(response.data);
+        //   } 
+        // }
         return response
       },
       async (error) => {
         const prevRequest = error?.config;
-        if (error?.response?.status === 403 && !prevRequest?.sent) {
+        if (error?.response?.status === 401 && !prevRequest?.sent) {
           prevRequest.sent = true;
           const newToken = await axiosClient.get('/app/refresh',{withCredentials: true});
           setToken(newToken.data.accessToken)
@@ -115,11 +115,11 @@ export const useAxios = ({url,method,auto = false,withCredentials = false, multi
 
   useEffect(()=>{
     if (auto){
-      if (Array.isArray(url)){
-        getStaticFiles()
-      } else {
+      // if (Array.isArray(url)){
+      //   getStaticFiles()
+      // } else {
         sendReq()
-      }
+      // }
     }
     return () => {
       controller.abort()

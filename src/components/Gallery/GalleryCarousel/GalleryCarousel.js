@@ -8,18 +8,18 @@ import { CustomIcon } from '../gallery.styles';
 
 const GalleryCarousel = (props) => {
   const {files} = props;
-  const {response,error,loading} = useAxios({url:files,method:'GET',auto:true});
   const [slide,setSlide] = useState(0)
+  // const {response,error,loading} = useAxios({url:files,method:'GET',auto:true});
 
-  useEffect(() => {
-    if (!loading){
-      if(error){
-        console.log(error)
-        toast.error('An error ocurred while retrieving the images')
-      }
-    }
-  },
-  [response,error,loading])
+  // useEffect(() => {
+  //   if (!loading){
+  //     if(error){
+  //       console.log(error)
+  //       toast.error('An error ocurred while retrieving the images')
+  //     }
+  //   }
+  // },
+  // [response,error,loading])
 
   const next = (e) => {
     e.stopPropagation();
@@ -75,15 +75,15 @@ const GalleryCarousel = (props) => {
           selectedItem={slide}
           
         > 
-          {response?.map(({data},index) => (
+          {files?.map((data,index) => (
             <div key={index} >
 
-              <img src={data} style={{maxWidth:'100%',width:'auto',maxHeight:'90vh'}}/>
+              <img src={process.env.REACT_APP_BASE_URL + '\\' + data} style={{maxWidth:'100%',width:'auto',maxHeight:'90vh'}}/>
             </div>
         
           ))}
         </Carousel>
-        {loading && <Loader size="md" center />}
+        {/* {loading && <Loader size="md" center />} */}
     </>
   )
 }

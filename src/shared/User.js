@@ -1,23 +1,36 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { CircularFrame, Wrapper, Fullname, FlexColumn, Stack } from "../shared/styles";
 import { Link } from "react-router-dom";
 import { Icon } from "rsuite";
 const User = (props) => {
-  const { image, username, small, medium} = props;
+  const { image, username, small, onClick} = props;
+  const [error,setError] = useState(false)
+
+  const onError = () => {
+    if (!error){
+      setError(true)
+    }
+  }
+  useEffect(() => {
+    setError(false)
+  },[image])
+
   return (
 
-      <Wrapper>
-        <CircularFrame small={small} medium={medium}>
-          {image ? <img
-            src={image}
+
+        <CircularFrame small={small} type="button" onClick={onClick}>
+          <div className="overlay"/>
+          {!error ? <img
+            src={image || process.env.REACT_APP_BASE_URL + `/public/uploads/${username}/profile/profile.png`}
             width="auto"
             height="auto"
-            style={{ maxHeight: small ? 45 : medium ? 75 : 150, cursor:"pointer"}}
+            onError={onError}
+            style={{ maxHeight: small ? 45 : 150, cursor:"pointer"}}
           /> :
-           <Icon icon='user-circle' size='2x'/>
+           <Icon icon='user-circle' size={small ? '2x' : '5x'}/>
           }
         </CircularFrame>
-      </Wrapper>
+    
 
   );
 };

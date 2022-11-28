@@ -16,12 +16,11 @@ export const useRefreshToken = () =>{
       }
 
       if (error){
-        console.log(error.response)
-        if (error?.response?.status === 401 || 400) {
+        console.log(error?.response?.status)
+        if (error?.response?.status === (401 || 400)) {
           toast.error('You are unauthorized to view this content')
-        }
+        } else if (error?.response?.status === 403) toast.warning('Your session has expired, please log back in')
         setLogOut()
-        // else if (error?.response?.status === 403) toast.warning('Your session has expired')
       }
     }
   },[response,error,loading])
