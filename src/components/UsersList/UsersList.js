@@ -30,7 +30,7 @@ const UserList = () =>{
       >
      <Sideoption key={index}>
        <Stack>
-          <User small/>
+          <User small username={username}/>
           <Stack direction={"column"}>
           <Title>
             {fullname}

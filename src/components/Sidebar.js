@@ -6,6 +6,7 @@ import {
   TweetButton,
   WhiteBackground,
   UserContainer,
+  Stack,
 } from "../shared/styles";
 import { Link, useHistory, useLocation  } from "react-router-dom";
 import {
@@ -22,10 +23,10 @@ import User from "../shared/User";
 import { useSelector, useDispatch} from "react-redux";
 import RegisterMessage from "../shared/RegisterMessage"
 import socket from "../controllers/ioControllers" 
+import {useAuth} from "../hooks/useAuth"
+import { Title } from "./Tweet/tweet.styles";
 const Sidebar = () => {
-  const [show,setShow] = useState(false)
-  const user = useSelector((state) => state.user.user);
-  const auth = useSelector((state) => state.user.isAuth);
+  const {user:{fullname,username},isAuth:auth} = useAuth()
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
@@ -43,7 +44,7 @@ const Sidebar = () => {
   }
 
   const options = auth ? [
-    {to:`/${user.username}`,text:"'Profile'",icon:"avatar"},
+    {to:`/${username}`,text:"'Profile'",icon:"avatar"},
     {to:``,text:"'Messages'",icon:"envelope-o"},
     {to:`/notifications`,text:"'Notifications'",icon:"bell-o"},
   ] : 
@@ -74,15 +75,26 @@ const Sidebar = () => {
   }, [location.key,auth])
 
 
+
   const Menu = ({onSelect,...rest}) => {
     return (
     <Popover {...rest} >
       <Dropdown.Menu onSelect={onSelect} style={{width:300}}>
-        <Dropdown.Item>
-        <User hidden image={user.file} username={user.username} small />
+        <Dropdown.Item onClick={() => history.push(`/${username}`)}>
+        <Stack>
+          <User small username={username}/>
+            <Stack direction={"column"}>
+            <Title>
+              {fullname}
+            </Title>
+            <p>
+            @{username}
+            </p>
+            </Stack>
+          </Stack>
         </Dropdown.Item>
         <Dropdown.Item onClick={logout}>
-        Log out @{user.username}
+        Log out @{username}
         </Dropdown.Item>
       </Dropdown.Menu>
     </Popover>
@@ -144,8 +156,17 @@ const Sidebar = () => {
           speaker={<Menu onSelect={handleSelect} />}
           >   
           <Sideoption flex user>
-              <User hidden image={user.file} username={user.username} fullname={user.fullname} small disabled /> 
-              <Icon icon="more" className="responsive-icon"/>
+          <Stack>
+          <User small username={username}/>
+            <Stack direction={"column"}>
+            <Title>
+              {fullname}
+            </Title>
+            <p>
+            @{username}
+            </p>
+            </Stack>
+          </Stack>
           </Sideoption>
           </Whisper>
         )}

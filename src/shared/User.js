@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { CircularFrame, Wrapper, Fullname, FlexColumn, Stack } from "../shared/styles";
-import { Link } from "react-router-dom";
+import { CircularFrame} from "../shared/styles";
 import { Icon } from "rsuite";
 const User = (props) => {
   const { image, username, small, onClick} = props;
@@ -16,8 +15,6 @@ const User = (props) => {
   },[image])
 
   return (
-
-
         <CircularFrame small={small} type="button" onClick={onClick}>
           <div className="overlay"/>
           {!error ? <img
