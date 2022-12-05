@@ -4,10 +4,10 @@ import { ToolbarButton, ToolbarCounter } from '../components/Tweet/tweet.styles'
 import { useAuth } from '../hooks/useAuth'
 import { useAxios } from '../hooks/useAxios'
 
-const LikeButton = ({_id,...props}) => {
+const LikeButton = ({_id,...props}) => { 
   const [likes,setLikes] = useState(props.likes);
   const {user:{id}} = useAuth();
-  const {response,error,loading,sendReq} = useAxios({url:'app/like-tweet',method:'PATCH', invalidateKey:'tweet'})
+  const {response,error,loading,sendReq} = useAxios({url:'app/like-tweet',method:'PATCH'})
   
   useEffect(()=>{
     if (!loading && response){
@@ -15,7 +15,9 @@ const LikeButton = ({_id,...props}) => {
     }
   },[response,error,loading])
 
-  const like = async () =>{ 
+  const like = async (e) =>{ 
+    e.stopPropagation();
+    console.log(_id)
     sendReq({_id})
   }
 

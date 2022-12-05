@@ -4,11 +4,13 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Col, Divider, Grid, Icon, IconButton, Loader, Row, Tag } from 'rsuite';
+import { useAuth } from '../../../hooks/useAuth';
 import { useAxios } from '../../../hooks/useAxios';
 import { Input, Stack, TextArea, TweetButton } from '../../../shared/styles';
 import ProfileSettingsImages from '../ProfileSettingsImages/ProfileSettingsImages';
 
 const ProfileSettingsForm = (props) => {
+  const {user:{username}} = useAuth()
   const {initialValues} = props;
   const [data,setData] = useState({})
   const history = useHistory();
@@ -20,6 +22,7 @@ const ProfileSettingsForm = (props) => {
       if (response){
         toast.success('Your profile settings have been updated successfully')
         history.goBack();
+  
       }
       if (error){
         toast.error('An error ocurred while trying to update your profile settings')

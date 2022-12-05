@@ -106,4 +106,9 @@ export const Title = styled.div`
   & > p{
     font-weight:normal
   }
+  
+  @media(max-width:1100px){
+    ${props => props.sidebar && 'display:none;'}  
+  }
+
 `

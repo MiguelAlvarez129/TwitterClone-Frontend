@@ -2,14 +2,6 @@ import React, { useEffect, useState } from "react";
 import {Loader} from "rsuite"
 // import Tweet from "./Tweet";
 import Tweet from "../components/Tweet/Tweet";
-import axios from "axios";
-import { useParams, Link, useHistory, useLocation } from "react-router-dom";
-import { useSelector, useDispatch} from "react-redux";
-import {updateDone} from "../redux/slices/postSlice"
-import {saveData} from "../redux/slices/dataSlice"
-import { trackPromise } from "react-promise-tracker";
-import { FeedLoader } from "../shared/styles";
-import Loading from "./Loading";
 import { useAxios } from "../hooks/useAxios";
 import { toast } from "react-toastify";
 
@@ -38,7 +30,7 @@ const Feed = (props) => {
   }
   return (
   <>
-    {response?.data.map((e,index) => <Tweet {...e} key={index} />)}
+    {response?.data.map((e,index) => <Tweet {...e} key={index + Date.now()} />)}
     {!loading && !response?.data?.length && noTweetMsg()}
     {loading && <Loader center backdrop size="md"/>}
   </>

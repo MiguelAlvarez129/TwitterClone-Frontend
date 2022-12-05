@@ -9,7 +9,8 @@ export const CustomIcon = styled(Icon)`
 
 export const GallerySidebarContainer = styled.div`
   background: white;
-  height: 100%;
+  height: 100vh;
+  overflow:auto;
   width: 400px;
   zIndex: 20;
 `

@@ -8,6 +8,17 @@ import { ToolbarContainer, ToolbarButton, ToolbarCounter } from '../tweet.styles
 const TweetToolbar = (props) => {
   const {comments} = props;
   const history = useHistory();
+
+  const addComment = (e) =>{
+    e.stopPropagation();
+    history.push({
+      pathname:'/compose/tweet',
+      state:{
+        reply: props, 
+        background: history.location, 
+      }
+    })
+  }
   return (
     <>
       {props.extended && 
@@ -19,24 +30,18 @@ const TweetToolbar = (props) => {
         <Divider/>
       </>
       }
-      <ToolbarContainer onClick={(e) => e.stopPropagation()}>
+      <ToolbarContainer>
         <div>
           <ToolbarButton
             icon={<Icon icon="comment-o" size="3x" />}
             appearance="subtle"
-            onClick={() => history.push({
-              pathname:'/compose/tweet',
-              state:{
-                reply: props, 
-                background: history.location, 
-              }
-            })}
+            onClick={addComment}
             circle
             type={"blue"}
             size="lg"
           />
          <ToolbarCounter type={"blue"}>
-          {comments.length}
+          {/* {comments.length} */}
           </ToolbarCounter>
         </div>
         <div>

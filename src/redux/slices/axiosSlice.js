@@ -15,12 +15,16 @@ export const axiosSlice = createSlice({
     },
     invalidateKey:(state,action) => {
       state.keys[action.payload] = true;
+      
     },
+    deleteKey:(state,action) =>{
+      delete state.keys[action.payload];
+    }
   }
 })
 
 
-export const {setKey,invalidateKey} = axiosSlice.actions;
+export const {setKey,invalidateKey,deleteKey} = axiosSlice.actions;
 export const getKeys = (state) => state.axiosKeys.keys
 
 export default axiosSlice.reducer

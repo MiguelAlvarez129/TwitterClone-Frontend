@@ -35,7 +35,7 @@ const Reply = () => {
   useEffect(()=>{
     if (!loading){
       if (response){
-        toast.success(reply ? 'Tweet replied' : 'Tweet added!')
+        toast.success(reply ? 'Comment added!' : 'Tweet added!')
         history.goBack()
       }
 

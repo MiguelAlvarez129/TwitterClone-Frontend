@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../../node_modules/react-responsive-carousel/lib/styles/carousel.min.css";
 import { IconButton} from "rsuite";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import {BackDrop,  GalleryContainer, Stack} from "../../shared/styles"
 import { useAxios } from "../../hooks/useAxios";
 import { toast } from "react-toastify";
@@ -9,12 +9,15 @@ import GalleryCarousel from "./GalleryCarousel/GalleryCarousel";
 import GallerySidebar from "./GallerySidebar/GallerySidebar";
 import { CustomIcon } from "./gallery.styles";
 import TweetToolbar from "../Tweet/TweetToolbar/TweetToolbar";
+import { useRefresh } from "../../hooks/useRefresh";
 
 const Gallery = () => {
   const [drawer,setDrawer] = useState(true)
+  const {deleteAxiosKey} = useRefresh()
   const { _id} = useParams();
   const history = useHistory();
-  const {response,error,loading} = useAxios({url:'app/get-tweet/' + _id, method:'GET', auto:true, key:'tweet'})
+  const location = useLocation();
+  const {response,error,loading} = useAxios({url:'app/get-tweet/' + _id, method:'GET', auto:true, key: location.pathname.includes('gallery') ? 'gallery' : null})
 
   useEffect(()=>{
     if (!loading && error){
@@ -30,6 +33,7 @@ const Gallery = () => {
 
   const back = (e) => {
     e.stopPropagation();
+    deleteAxiosKey('gallery')
     history.goBack();
   };
 

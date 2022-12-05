@@ -111,7 +111,7 @@ const Main = () => {
                 <Route
                   exact
                   path="/settings/profile"
-                  render={(props) => <ProfileSettings {...props} />}
+                  render={(props) => <ProfileSettings {...props}/>}
                 />
               )}
               {background && (

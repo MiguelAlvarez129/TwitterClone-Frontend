@@ -214,12 +214,12 @@ const Sidebar = () => {
           <Stack>
           <User small username={username}/>
             <Stack direction={"column"}>
-            <Title>
+            <Title sidebar>
               {fullname}
-            </Title>
             <p>
             @{username}
             </p>
+            </Title>
             </Stack>
           </Stack>
           </Sideoption>
@@ -230,7 +230,7 @@ const Sidebar = () => {
       {loading && <WhiteBackground width="310">
         <Loader size="md" center backdrop/>
       </WhiteBackground>}
-      <User small username={username}/>
+      {/* <User small username={username}/> */}
     </Sidemenu>
   );
 };

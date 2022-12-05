@@ -18,8 +18,7 @@ const User = (props) => {
         <CircularFrame small={small} type="button" onClick={onClick}>
           <div className="overlay"/>
           {!error ? <img
-            // key={key || null}
-            src={image || process.env.REACT_APP_BASE_URL + `/public/uploads/${username}/profile/profile.png`}
+            src={image || process.env.REACT_APP_BASE_URL + `/public/uploads/${username}/profile/profile.png?${Date.now()}`}
             width="auto"
             height="auto"
             onError={onError}
