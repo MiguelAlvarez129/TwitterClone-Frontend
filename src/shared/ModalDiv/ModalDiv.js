@@ -24,7 +24,7 @@ const ModalDiv = ({children,files,loading}) => {
   },[])
 
   return (
-    <ReplyDiv $overflow={overflow} files={files} onMouseDown={(e) => e.stopPropagation()}>
+    <ReplyDiv $overflow={overflow} onMouseDown={(e) => e.stopPropagation()}>
       <div ref={ref}>
         {children}
       </div>

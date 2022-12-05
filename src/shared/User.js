@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { CircularFrame} from "../shared/styles";
 import { Icon } from "rsuite";
 const User = (props) => {
-  const { image, username, small, onClick} = props;
+  const { image, username, small, onClick, key} = props;
   const [error,setError] = useState(false)
 
   const onError = () => {
@@ -18,6 +18,7 @@ const User = (props) => {
         <CircularFrame small={small} type="button" onClick={onClick}>
           <div className="overlay"/>
           {!error ? <img
+            // key={key || null}
             src={image || process.env.REACT_APP_BASE_URL + `/public/uploads/${username}/profile/profile.png`}
             width="auto"
             height="auto"

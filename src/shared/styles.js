@@ -266,6 +266,12 @@ export const CircularFrame = styled.button`
     text-indent: 0px;
     overflow:hidden;
     color:gray;
+   
+    
+    ${props => !props.small && `
+    &:hover > .overlay{
+        background: #57575761;
+    }
     & > .overlay{
         transition: background 0.5s;
         position: absolute;
@@ -273,11 +279,6 @@ export const CircularFrame = styled.button`
         width: 150px;
         border-radius: 50%;
         background: transparent;
-    }
-    
-    ${props => !props.small && `
-    &:hover > .overlay{
-        background: #57575761;
     }
     `}
    
@@ -528,7 +529,7 @@ export const ReplyDiv = styled.div`
     border-radius: 14px;
     overflow:auto;
     height:${props =>  props.$overflow ? '100%' : 'auto'};
-   
+    min-height:200px;
     @media (max-width:600px){
         height:100%;
     }

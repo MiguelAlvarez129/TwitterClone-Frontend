@@ -22,6 +22,7 @@ export const Image = styled.div`
   background-color: lightgray;
   background-image: ${props => `url(${props.image})`};
   background-size: cover;
+  background-position: center;
   height:auto;
   width:100%;
   border-radius:10px;

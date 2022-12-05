@@ -11,7 +11,7 @@ const TweetHeader = (props) => {
         <HeaderContainer>
           {props.extended ? 
         <Stack>
-          <User small/>
+          <User small username={username}/>
           <Stack direction={"column"}>
           <Title>
             {fullname}

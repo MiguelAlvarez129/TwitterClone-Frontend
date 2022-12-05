@@ -63,7 +63,7 @@ const Main = () => {
                 <Route
                   exact
                   path="/home"
-                  render={(props) => <Dashboard {...props} />}
+                  render={(props) => <Dashboard {...props}  />}
                 />
                 <Route
                   exact

@@ -8,7 +8,7 @@ import { useAuth } from "../../hooks/useAuth";
 import ProfileSettingsForm from "./ProfileSettingsForm/ProfileSettingsForm";
 
 
-const ProfileSettings = (props) => {
+const ProfileSettings = () => {
   const {user:{username}} = useAuth();
   const history = useHistory();
   const {response,error,loading} = useAxios({url:'/app/get-user/' + username,method:'GET',auto:true});

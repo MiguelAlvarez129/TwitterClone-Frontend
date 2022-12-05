@@ -17,11 +17,12 @@ import { useAxios } from "../../hooks/useAxios";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import Tweet from "../Tweet/Tweet";
+import { useAuth } from "../../hooks/useAuth";
 
 const Reply = () => {
   const [files,setFiles] = useState([])
   const [value,setValue] = useState('')
-  const user = useSelector((state) => state.user.user);
+  const {user:{username}} = useAuth();
   const history = useHistory();
   const location = useLocation();
   const reply = location.state?.reply;
@@ -57,7 +58,6 @@ const Reply = () => {
 
   return (
     <BackDrop onMouseDown={()=> history.goBack()} onMouseUp={(e) => e.preventDefault()} >
-      {/* <Stack justify={'center'} align={'center'}> */}
         <ModalDiv files={files.length} loading={loading} >
           <IconButton
               style={{ margin: "-15px -15px 0px" }}
@@ -71,7 +71,7 @@ const Reply = () => {
         {reply && <Tweet {...reply} reply extended={false}/>}
           <Stack>
         
-            <User image={user.file} small />
+            <User username={username} small />
          
             <Stack direction={'column'}>
               <TextArea value={value} onChange={(e) => setValue(e.target.value)}
@@ -101,7 +101,6 @@ const Reply = () => {
             </Stack>
           </Stack>
         </ModalDiv>
-      {/* </Stack> */}
     </BackDrop>
   );
 };

@@ -24,8 +24,12 @@ const PostView = (props) => {
     <>
     <Topbar title={"Tweet"} button/> 
     {response?.data && <Tweet {...response.data} extended={true}/>}
-    {loading && <Loader center size="md"/>}
-    {!loading && response?.data?.comments &&  <Comments /> }
+    {/* {loading && <div style={}>
+
+      <Loader center size="md"/>
+    </div> 
+      } */}
+    {!loading && !!response?.data?.comments.length &&  <Comments /> }
     </> 
     
   );

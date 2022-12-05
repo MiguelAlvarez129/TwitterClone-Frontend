@@ -26,7 +26,7 @@ const UserProfile = (props) => {
     params: { username }, 
   } = props.match;
   const {response,error,loading} = useAxios({url:'/app/get-user/' + username,method:'GET',auto:true});
-  // const { username, file, fullname, bg} = data;
+
   
   useEffect(()=>{
     if (!loading && error){
@@ -37,34 +37,6 @@ const UserProfile = (props) => {
       }
     }
   },[response,error,loading])
-  // useEffect(() => {
-  //   const cancel = axios.CancelToken.source();
-  //   if (savedData?.userData){
-  //     setData(savedData.userData)
-  //   } else {
-  //     trackPromise(
-  //       axios
-  //         .post("/app/getUser", { username: profile}, {cancelToken:cancel.token}) 
-  //         .then((res) => {
-  //           setData(res.data);
-  //           dispatch(setUserData(res.data))
-  //         })
-  //         .catch((e) => {
-  //           setData(false)
-  //           if (e.response.status === 404){
-  //             Alert.error(e.response.statusText,5000)
-  //             history.push("/404")
-  //           } else {
-  //             Alert.error(e.response.statusText,5000)
-  //           }
-  //         })
-  //     )
-  //   }
-  
-  //   return () => {
-  //     cancel.cancel()
-  //   };
-  // }, [user]);
 
   const openSettings = (e) => {
     e.stopPropagation();
@@ -84,7 +56,7 @@ return (
       <BackgroundImage image={process.env.REACT_APP_BASE_URL + `/public/uploads/${username}/profile/bg.png`}/>
       <ProfileContainer>
           {/* <ProfilePic hidden src={process.env.REACT_APP_BASE_URL + `/public/uploads/${username}/profile/profile.png`}/> */}
-          <User username={username} small={false}/>
+          <User username={username} small={false} />
           {user.username === username ? 
           <TweetButton inverted small top onClick={openSettings} style={{flex:1,maxWidth:200}}>
             Edit Profile

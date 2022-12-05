@@ -178,10 +178,59 @@ const Sidebar = () => {
 
   return  (
     <Sidemenu>
-       <MenuContents/>
+       {/* <MenuContents/> */}
+       <>
+      <Link to="/home" style={{ textDecoration: "none" }}>
+        <Logo/>
+      </Link>
+
+      {list.map(({icon,to,text,selected},index) => {
+        return (<Link
+        to={to}
+        key={index}
+        style={{ textDecoration: "none", color: "black" }}
+      >
+        <Sideoption text={`${text}`} selected={selected} >
+          { text === "'Notifications'" && !!noti && <Badge content={noti} style={{position:"absolute",left:10}}/>}
+          <Icon icon={icon} size="2x" />
+        </Sideoption> 
+      </Link>)
+      })}
+
+      <TweetButton onClick={e => openTweet(e)} icon={<Icon icon='edit'/>} responsive>
+        Tweet 
+      </TweetButton>
+
+      <UserContainer>
+    
+        {auth && (
+          <Whisper
+          placement="topStart"
+          trigger="click"
+          triggerRef={ref}
+          speaker={<Menu onSelect={handleSelect} />}
+          >   
+          <Sideoption flex user>
+          <Stack>
+          <User small username={username}/>
+            <Stack direction={"column"}>
+            <Title>
+              {fullname}
+            </Title>
+            <p>
+            @{username}
+            </p>
+            </Stack>
+          </Stack>
+          </Sideoption>
+          </Whisper>
+        )}
+      </UserContainer>
+    </>
       {loading && <WhiteBackground width="310">
         <Loader size="md" center backdrop/>
       </WhiteBackground>}
+      <User small username={username}/>
     </Sidemenu>
   );
 };
