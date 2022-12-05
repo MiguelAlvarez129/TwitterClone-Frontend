@@ -30,7 +30,7 @@ const Feed = (props) => {
   }
   return (
   <>
-    {response?.data.map((e,index) => <Tweet {...e} key={index + Date.now()} />)}
+    {response?.data.map((e,index) => <Tweet {...e} key={index} />)}
     {!loading && !response?.data?.length && noTweetMsg()}
     {loading && <Loader center backdrop size="md"/>}
   </>
