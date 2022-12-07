@@ -22,7 +22,7 @@ import { useAuth } from "../../hooks/useAuth";
 const Reply = () => {
   const [files,setFiles] = useState([])
   const [value,setValue] = useState('')
-  const {user:{username}} = useAuth();
+  const {user:{username,profilePic}} = useAuth();
   const history = useHistory();
   const location = useLocation();
   const reply = location.state?.reply;
@@ -71,7 +71,7 @@ const Reply = () => {
         {reply && <Tweet {...reply} reply extended={false}/>}
           <Stack>
         
-            <User username={username} small />
+            <User username={username} small profilePic={profilePic} />
          
             <Stack direction={'column'}>
               <TextArea value={value} onChange={(e) => setValue(e.target.value)}

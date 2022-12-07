@@ -17,7 +17,6 @@ const LikeButton = ({_id,...props}) => {
 
   const like = async (e) =>{ 
     e.stopPropagation();
-    console.log(_id)
     sendReq({_id})
   }
 
