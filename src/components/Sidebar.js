@@ -26,7 +26,7 @@ import socket from "../controllers/ioControllers"
 import {useAuth} from "../hooks/useAuth"
 import { Title } from "./Tweet/tweet.styles";
 const Sidebar = () => {
-  const {user:{fullname,username},isAuth:auth} = useAuth()
+  const {user:{fullname,username,profilePic},isAuth:auth} = useAuth()
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
@@ -34,6 +34,7 @@ const Sidebar = () => {
   const [loading,setLoading] = useState(true)
   const [list,setList] = useState([])
   const ref = useRef(null)
+
 
   const invertedIcons = (icon) =>{
     const icons = [
@@ -82,7 +83,7 @@ const Sidebar = () => {
       <Dropdown.Menu onSelect={onSelect} style={{width:300}}>
         <Dropdown.Item onClick={() => history.push(`/${username}`)}>
         <Stack>
-          <User small username={username}/>
+          <User small username={username} profilePic={profilePic}/>
             <Stack direction={"column"}>
             <Title>
               {fullname}
@@ -157,7 +158,7 @@ const Sidebar = () => {
           >   
           <Sideoption flex user>
           <Stack>
-          <User small username={username}/>
+          <User small username={username} profilePic={profilePic}/>
             <Stack direction={"column"}>
             <Title>
               {fullname}
@@ -212,7 +213,7 @@ const Sidebar = () => {
           >   
           <Sideoption flex user>
           <Stack>
-          <User small username={username}/>
+          <User small username={username} profilePic={profilePic}/>
             <Stack direction={"column"}>
             <Title sidebar>
               {fullname}
@@ -230,7 +231,6 @@ const Sidebar = () => {
       {loading && <WhiteBackground width="310">
         <Loader size="md" center backdrop/>
       </WhiteBackground>}
-      {/* <User small username={username}/> */}
     </Sidemenu>
   );
 };

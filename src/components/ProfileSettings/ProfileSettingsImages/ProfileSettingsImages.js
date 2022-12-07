@@ -9,7 +9,7 @@ import { Bg } from '../profileSettings.styles'
 
 const ProfileSettingsImages = (props) => {
   const {data,setData} = props;
-  const {user:{username}} = useAuth();
+  const {user:{username,profilePic}} = useAuth();
   const bg = useRef();
   const profile = useRef();
   const upload = async (event,key) => {
@@ -58,7 +58,7 @@ const ProfileSettingsImages = (props) => {
       onChange={(e) => upload(e,'profile')}
       ref={profile}
       type="file"/>
-      <User username={username} small={false} image={data?.profile?.image} onClick={() => profile.current.click()}/>
+      <User username={username} small={false} profilePic={profilePic} image={data?.profile?.image} onClick={() => profile.current.click()}/>
       {/* <ProfilePic hidden src={data?.profile?.image || process.env.REACT_APP_BASE_URL + '/public/uploads/mick129/profile/profile.png'} onClick={() => profile.current.click()}/> */}
     </Col>
   </Row>

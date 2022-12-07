@@ -25,7 +25,7 @@ const UserProfile = (props) => {
   const {
     params: { username }, 
   } = props.match;
-  const {response,error,loading} = useAxios({url:'/app/get-user/' + username,method:'GET',auto:true});
+  const {response,error,loading} = useAxios({url:'/app/get-user/' + username,method:'GET',auto:true,key:'userProfile'});
 
   
   useEffect(()=>{
@@ -35,6 +35,10 @@ const UserProfile = (props) => {
       } else {
         toast.error('An error ocurred while fetching this user')
       }
+    }
+
+    if (!loading && response){
+      console.log(response)
     }
   },[response,error,loading])
 
@@ -53,10 +57,10 @@ return (
 
     <div> 
       <Topbar title={'@' + username} button/>
-      <BackgroundImage image={process.env.REACT_APP_BASE_URL + `/public/uploads/${username}/profile/bg.png?${Date.now()}`}/>
+      <BackgroundImage image={process.env.REACT_APP_BASE_URL + `/public/uploads/${username}/profile/bg.png`}/>
       <ProfileContainer>
           {/* <ProfilePic hidden src={process.env.REACT_APP_BASE_URL + `/public/uploads/${username}/profile/profile.png`}/> */}
-          <User username={username} small={false} />
+          <User username={username} small={false} profilePic={response?.data?.profilePic}  />
           {user.username === username ? 
           <TweetButton inverted small top onClick={openSettings} style={{flex:1,maxWidth:200}}>
             Edit Profile
@@ -67,56 +71,6 @@ return (
     {!loading && <UserProfileContent {...response?.data}/>} 
     {!loading && response?.data && <Feed username={username}/>}
     </div>
-
-    // <CustomGrid fluid>
-    //   <Topbar title={ data ? fullname : "Profile"} button/>
-    //   <Bg bottom image={bg} />
-    //   <Row>
-    //     <Col xs={12} xsPull={1}>
-    //       <FlexCenter>
-    //         <ProfilePic src={file} hidden />
-    //       </FlexCenter>
-    //     </Col>
-    //     <Col xs={7} xsOffset={4}>
-    //       {editable ? 
-    //         <TweetButton inverted small top onClick={openSettings}>
-    //           Edit Profile
-    //         </TweetButton>
-    //        : <FollowButton followers={data.followers} profile={data._id}/>
-    //       }
-    //     </Col>
-    //   </Row>
-    //   <Row style={{borderBottom:"solid 1px lightgray"}}>
-    //     <Col xs={12} xsOffset={1}>
-    //       {data ? (
-    //         <>
-    //           <Fullname>{fullname}</Fullname>
-    //           <p>{username}</p>
-    //           <p style={{fontSize:18}}>{data.bio}</p>
-    //           <br />
-    //         </>
-    //       ) : (
-    //         <Fullname>{profile}</Fullname>
-    //       )}
-    //     </Col>
-    //     <Col xs={24}>
-    //       {!data && (
-    //         <div style={{textAlign:"center"}}>
-    //           <hr />
-    //           <br />
-
-    //           <Fullname>This account doesn't seem to exist</Fullname>
-    //           <br />
-    //           <p>Try searching for another.</p>
-    //         </div>
-    //       )}
-    //     </Col>
-    //   </Row>
-
-    //   <Row>
-    //     <Feed _id={data._id} data={data} />
-    //   </Row>
-    // </CustomGrid>
   );
 };
 

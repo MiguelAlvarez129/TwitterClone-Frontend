@@ -18,6 +18,7 @@ const Feed = (props) => {
     if(!loading && error){
       toast.error('An error ocurred while fetching the feed data')
     }
+    console.log(response)
   },[response,error,loading])
 
 
@@ -30,7 +31,7 @@ const Feed = (props) => {
   }
   return (
   <>
-    {response?.data.map((e,index) => <Tweet {...e} key={index} />)}
+    {!loading && response?.data.map((e,index) => <Tweet {...e} key={index} />)}
     {!loading && !response?.data?.length && noTweetMsg()}
     {loading && <Loader center backdrop size="md"/>}
   </>

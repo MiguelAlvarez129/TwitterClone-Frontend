@@ -5,13 +5,13 @@ import User from '../../../shared/User';
 import { HeaderContainer, Title } from '../tweet.styles'
 
 const TweetHeader = (props) => {
- const {username,fullname} = props.author
+ const {username,fullname,profilePic} = props.author
   return (
       <Link to={`/${username}`} onClick={e => e.stopPropagation()} style={{textDecoration:'none'}}>
         <HeaderContainer>
           {props.extended ? 
         <Stack>
-          <User small username={username}/>
+          <User small username={username} profilePic={profilePic}/>
           <Stack direction={"column"}>
           <Title>
             {fullname}

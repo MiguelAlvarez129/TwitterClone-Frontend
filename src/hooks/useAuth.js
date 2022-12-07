@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { getUser, setCurrentUser, setAccessToken, logOut} from "../redux/slices/authSlice"
+import { getUser, setCurrentUser, setAccessToken, logOut, updateUser} from "../redux/slices/authSlice"
 
 
 export const useAuth = () =>{
@@ -14,6 +14,10 @@ export const useAuth = () =>{
     dispatch(setAccessToken(token))
   }
 
+  const setUpdateUser = (payload) =>{
+    dispatch(updateUser(payload))
+  }
+
   const setLogOut = () =>{
     dispatch(logOut())
   }
@@ -24,7 +28,8 @@ export const useAuth = () =>{
     isAuth,
     setUser,
     setToken,
-    setLogOut
+    setLogOut,
+    setUpdateUser
   }
   
 }

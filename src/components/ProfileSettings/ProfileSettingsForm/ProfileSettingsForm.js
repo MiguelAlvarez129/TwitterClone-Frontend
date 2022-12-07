@@ -10,16 +10,17 @@ import { Input, Stack, TextArea, TweetButton } from '../../../shared/styles';
 import ProfileSettingsImages from '../ProfileSettingsImages/ProfileSettingsImages';
 
 const ProfileSettingsForm = (props) => {
-  const {user:{username}} = useAuth()
+  const {setUpdateUser} = useAuth()
   const {initialValues} = props;
   const [data,setData] = useState({})
   const history = useHistory();
   const { register , reset, handleSubmit, errors} = useForm();
-  const {response,error,loading,sendReq} = useAxios({url:'/app/update-profile-settings',multipart:true,method:'PATCH'})
+  const {response,error,loading,sendReq} = useAxios({url:'/app/update-profile-settings',multipart:true,method:'PATCH',invalidateKey:'userProfile'})
 
   useEffect(()=>{
     if (!loading){
       if (response){
+        setUpdateUser(response.data)
         toast.success('Your profile settings have been updated successfully')
         history.goBack();
   

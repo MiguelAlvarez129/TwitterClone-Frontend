@@ -23,8 +23,14 @@ export const userSlice = createSlice({
       state.isAuth = false;
     },
     updateUser:(state,action)=>{
-      const {file, fullname} = action.payload;
-      state.user= {...state.user,fullname,file};
+      const {profilePic, fullname} = action.payload;
+      if (profilePic){
+        state.user.profilePic = profilePic
+      }
+      if (fullname){
+        state.user.fullname = fullname
+      }
+      
     }
   }
 })

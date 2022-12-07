@@ -18,7 +18,7 @@ const Tweet = (props) => {
       <Stack> 
       {!extended && 
         <Link to={`/${username}`} onClick={e => e.stopPropagation()} style={{textDecoration:'none'}}>
-          <User {...props.author} small />
+          <User {...props.author} small  />
         </Link>
           }   
         <Stack direction={'column'}>

@@ -15,6 +15,9 @@ const Comments = (props) => {
     if (!loading && error){
       toast.error('An error ocurred while retrieving the comments')
     }
+    if (!loading && response){
+      console.log(response)
+    }
   },[response,error,loading])
   return (
     <>

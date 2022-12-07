@@ -4,7 +4,6 @@ import Tweet from "../components/Tweet/Tweet"
 import Topbar from "../shared/Topbar"
 import { useAxios } from "../hooks/useAxios";
 import { toast } from "react-toastify";
-import { Loader } from "rsuite";
 
 const PostView = (props) => {
   const {_id} = props.match.params;
@@ -17,6 +16,9 @@ const PostView = (props) => {
       } else {
         toast.error('An error ocurred while retrieving the tweet')
       }
+    }
+    if (!loading && response){
+      console.log(response.data)
     }
   },[response,error,loading])
  
