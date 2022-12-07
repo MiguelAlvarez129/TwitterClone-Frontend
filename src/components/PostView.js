@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 const PostView = (props) => {
   const {_id} = props.match.params;
-  const {response,error,loading} = useAxios({url:'app/get-tweet/' + _id, method:'GET', auto:true, key:"comments"})
+  const {response,error,loading} = useAxios({url:'app/get-tweet/' + _id, method:'GET', auto:true, key:"feed"})
 
   useEffect(()=>{
     if (!loading && error){

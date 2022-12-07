@@ -6,9 +6,10 @@ import TweetToolbar from './TweetToolbar/TweetToolbar'
 import TweetHeader from './TweetHeader/TweetHeader'
 import TweetGallery from './TweetGallery/TweetGallery'
 import { Link, useHistory } from 'react-router-dom'
+import RetweetSign from './RetweetSign/RetweetSign'
 const Tweet = (props) => {
   const history = useHistory();
-  const {author:{username},_id,extended, reply} = props;
+  const {author:{username},_id,extended, reply,retweet} = props;
   const onClick = (e) =>{
     e.stopPropagation()
     !reply && !extended && history.push(`/${username}/${_id}`)
@@ -22,10 +23,14 @@ const Tweet = (props) => {
         </Link>
           }   
         <Stack direction={'column'}>
+          {retweet && <RetweetSign {...props.retweet.author} />}
           <TweetHeader {...props} /> 
+          {
+            props.content &&
           <TweetContent extended={extended}>
             {props.content}
           </TweetContent>
+          }
         </Stack>
       </Stack>
       {!!props.files.length && <TweetGallery {...props}/>}

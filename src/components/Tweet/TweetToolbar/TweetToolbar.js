@@ -2,6 +2,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom';
 import { Divider, Dropdown, Icon } from 'rsuite';
 import LikeButton from '../../../shared/LikeButton';
+import RetweetButton from '../../../shared/RetweetButton';
 import { Stack } from '../../../shared/styles';
 import { ToolbarContainer, ToolbarButton, ToolbarCounter } from '../tweet.styles';
 
@@ -45,7 +46,8 @@ const TweetToolbar = (props) => {
           </ToolbarCounter>
         </div>
         <div>
-          <Dropdown
+          <RetweetButton {...props}/>
+          {/* <Dropdown
             placement="leftStart"
             icon={<Icon icon="retweet" />}
             renderTitle={() => {
@@ -71,7 +73,7 @@ const TweetToolbar = (props) => {
               {" "}
               Quote Tweet
             </Dropdown.Item>
-          </Dropdown>
+          </Dropdown> */}
           {/* <b>{rq}</b> */}
         </div>
         <div>

@@ -10,7 +10,7 @@ const Comments = (props) => {
   const {
     params: { _id },
   } = match;
-  const {response,error,loading} = useAxios({url:'/app/get-comments/' + _id ,method:'GET',auto:true,key:'comments'})
+  const {response,error,loading} = useAxios({url:'/app/get-comments/' + _id ,method:'GET',auto:true,key:'feed'})
   useEffect(()=>{
     if (!loading && error){
       toast.error('An error ocurred while retrieving the comments')

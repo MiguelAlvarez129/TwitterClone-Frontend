@@ -18,7 +18,7 @@ const Feed = (props) => {
     if(!loading && error){
       toast.error('An error ocurred while fetching the feed data')
     }
-    console.log(response)
+    console.log(response, 'FEED')
   },[response,error,loading])
 
 
