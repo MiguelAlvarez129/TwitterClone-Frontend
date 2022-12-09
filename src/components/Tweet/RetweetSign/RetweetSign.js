@@ -7,7 +7,7 @@ const RetweetSign = (props) => {
   const {user:{username:currentUser}} = useAuth()
 
   return (
-    <div style={{fontWeight:'bold'}}>
+    <div style={{fontWeight:'bold', padding:'5px 15px'}}>
       <Icon icon="retweet" />
       {' '}
       {username === currentUser ? 'You Retweeted' : `@${username} retweeted`}

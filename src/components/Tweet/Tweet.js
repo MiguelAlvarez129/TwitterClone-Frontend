@@ -16,6 +16,7 @@ const Tweet = (props) => {
   }
   return ( 
     <TweetContainer onClick={onClick} extended={extended} reply={reply}>
+        {retweet && !!!props.content &&<RetweetSign {...props.author} />}
       <Stack> 
       {!extended && 
         <Link to={`/${username}`} onClick={e => e.stopPropagation()} style={{textDecoration:'none'}}>
@@ -23,14 +24,12 @@ const Tweet = (props) => {
         </Link>
           }   
         <Stack direction={'column'}>
-          {retweet && <RetweetSign {...props.retweet.author} />}
           <TweetHeader {...props} /> 
-          {
-            props.content &&
+  
           <TweetContent extended={extended}>
             {props.content}
           </TweetContent>
-          }
+          
         </Stack>
       </Stack>
       {!!props.files.length && <TweetGallery {...props}/>}

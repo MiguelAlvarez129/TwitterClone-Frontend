@@ -26,7 +26,7 @@ const Reply = () => {
   const history = useHistory();
   const location = useLocation();
   const reply = location.state?.reply;
-  const {response,error,loading,sendReq} = useAxios({url:'/app/create-tweet',method:'POST',multipart: true, invalidateKey: 'feed'})
+  const {response,error,loading,sendReq} = useAxios({url: reply ? '/app/add-comment' :'/app/create-tweet',method:'POST',multipart: true, invalidateKey: 'feed'})
 
   const del = (index) =>{
     setFiles(files => files.filter((e,i) => i !== index)) 
