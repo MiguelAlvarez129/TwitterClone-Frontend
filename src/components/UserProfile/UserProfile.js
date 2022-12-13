@@ -57,7 +57,7 @@ return (
 
     <div> 
       <Topbar title={'@' + username} button/>
-      <BackgroundImage image={process.env.REACT_APP_BASE_URL + `\\${response?.data?.bgPic}`}/>
+      <BackgroundImage image={process.env.REACT_APP_BASE_URL + `/${response?.data?.bgPic}`}/>
       <ProfileContainer>
           {/* <ProfilePic hidden src={process.env.REACT_APP_BASE_URL + `/public/uploads/${username}/profile/profile.png`}/> */}
           <User username={username} small={false} profilePic={response?.data?.profilePic}  />

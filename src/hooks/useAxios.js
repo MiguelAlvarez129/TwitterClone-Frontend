@@ -22,29 +22,6 @@ export const useAxios = ({url,method,auto = false,withCredentials = false, multi
   const [loading,setLoading] = useState(false)
   const mounted = useRef(true)
   const controller = new AbortController()
-  
-  // const getStaticFiles = async () => {
-  //   try {
-  //     setLoading(true)
-  //     const response = await Promise.all(url.map((url) => axiosClient({
-  //       url,
-  //       method,
-  //       withCredentials,
-  //       responseType:'blob',
-  //     })))
-  //     if (mounted.current){
-  //       setResponse(response)
-  //       setError(null)
-  //     }
-  //   } catch (error) {
-  //     if (mounted.current) {
-  //       setError(error)
-  //       setResponse(null)
-  //     }
-  //   } finally {
-  //     if (mounted.current) setLoading(false)
-  //   }
-  // }
 
   const sendReq = async (data = null) =>{
     try {
@@ -75,12 +52,6 @@ export const useAxios = ({url,method,auto = false,withCredentials = false, multi
   useEffect(()=>{
     const responseIntercept = axiosClient.interceptors.response.use(
       response => {
-        // console.log(response.config?.responseType,response.config?.url,response.data)
-        // if (response.config?.responseType === 'blob'){
-        //   if (typeof(response.data) !== 'string'){
-        //     response.data = URL.createObjectURL(response.data);
-        //   } 
-        // }
         return response
       },
       async (error) => {
@@ -115,11 +86,7 @@ export const useAxios = ({url,method,auto = false,withCredentials = false, multi
 
   useEffect(()=>{
     if (auto){
-      // if (Array.isArray(url)){
-      //   getStaticFiles()
-      // } else {
         sendReq()
-      // }
     }
     return () => {
       controller.abort()

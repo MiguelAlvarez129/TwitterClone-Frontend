@@ -6,6 +6,13 @@ transition: background 0.25s;
 cursor: ${props => !props.extended && !props.reply ? "pointer" : "default"};
 ${props => !props.reply  && "border-bottom:1px solid lightgray;"}
 ${props => !props.reply ? "padding: 10px;" : "padding-bottom:20px;"}
+// ${props => !props.quotedTweet && `    
+// max-width: 500px;
+// border: 1px solid lightgray;
+// width: 100%;
+// border-radius: 5px;
+// margin:5px 0px;`}
+
 
   &:hover{
     ${props => !props.extended && !props.reply && "background: #f0f0f0;" }

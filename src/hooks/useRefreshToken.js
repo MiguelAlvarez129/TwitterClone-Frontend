@@ -12,14 +12,15 @@ export const useRefreshToken = () =>{
       if (response){
         const {data} = response;
         setUser({...data})
-        //toast.success('You have logged in successfully')
       }
 
       if (error){
         console.log(error?.response?.status)
         if (error?.response?.status === (401 || 400)) {
           toast.error('You are unauthorized to view this content')
-        } else if (error?.response?.status === 403) toast.warning('Your session has expired, please log back in')
+        } else if (error?.response?.status === 403) {
+          toast.warning('Your session has expired, please log back in')
+        }
         setLogOut()
       }
     }

@@ -1,8 +1,7 @@
-import React, {useRef, useState} from 'react'
+import React, {useRef} from 'react'
 import { toast } from 'react-toastify'
 import { Col, Icon, IconButton, Row } from 'rsuite'
 import { useAuth } from '../../../hooks/useAuth'
-import ProfilePic from '../../../shared/ProfilePic'
 import { Stack } from '../../../shared/styles'
 import User from '../../../shared/User'
 import { Bg } from '../profileSettings.styles'
@@ -30,7 +29,7 @@ const ProfileSettingsImages = (props) => {
   };
   return (
     <Row>
-    <Bg image={data?.bg?.image || process.env.REACT_APP_BASE_URL + `/public/uploads/${username}/profile/bg.png`} bottom>
+    <Bg image={data?.bg?.image} bottom>
       <Stack justify={'center'} align={'center'}>  
         <IconButton
           onClick={() => bg.current.click()}
@@ -58,8 +57,7 @@ const ProfileSettingsImages = (props) => {
       onChange={(e) => upload(e,'profile')}
       ref={profile}
       type="file"/>
-      <User username={username} small={false} profilePic={profilePic} image={data?.profile?.image} onClick={() => profile.current.click()}/>
-      {/* <ProfilePic hidden src={data?.profile?.image || process.env.REACT_APP_BASE_URL + '/public/uploads/mick129/profile/profile.png'} onClick={() => profile.current.click()}/> */}
+      <User username={username} small={false} image={data?.profile?.image} onClick={() => profile.current.click()}/>
     </Col>
   </Row>
   )

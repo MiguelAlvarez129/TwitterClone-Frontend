@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import { Icon, Divider, IconButton, Progress, } from "rsuite";
 import User from "../../shared/User";
-import { useSelector } from "react-redux";
 import {
   BackDrop,
   Stack,
@@ -10,7 +9,7 @@ import {
   TweetButton,
 } from "../../shared/styles";
 import { useHistory, useLocation } from "react-router-dom";
-import { Image, Toolbar, ReplyDiv } from "./reply.styles";
+import { Image, Toolbar } from "./reply.styles";
 import UploadButton from "./UploadButton/UploadButton"; 
 import ModalDiv from "../../shared/ModalDiv/ModalDiv";
 import { useAxios } from "../../hooks/useAxios";
@@ -18,6 +17,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import Tweet from "../Tweet/Tweet";
 import { useAuth } from "../../hooks/useAuth";
+import QuotedRetweet from "../QuotedRetweet/QuotedRetweet";
 
 const Reply = () => {
   const [files,setFiles] = useState([])
@@ -26,16 +26,17 @@ const Reply = () => {
   const history = useHistory();
   const location = useLocation();
   const reply = location.state?.reply;
-  const {response,error,loading,sendReq} = useAxios({url: reply ? '/app/add-comment' :'/app/create-tweet',method:'POST',multipart: true, invalidateKey: 'feed'})
+  const quotedRetweet = location.state?.quotedRetweet;
+  const url = reply ? '/app/add-comment' : quotedRetweet ? '/app/add-retweet'  : '/app/create-tweet'
+  const {response,error,loading,sendReq} = useAxios({url,method:'POST',multipart: true, invalidateKey: 'feed'})
 
   const del = (index) =>{
     setFiles(files => files.filter((e,i) => i !== index)) 
   }
-
   useEffect(()=>{
     if (!loading){
       if (response){
-        toast.success(reply ? 'Comment added!' : 'Tweet added!')
+        toast.success(reply ? 'Comment added!' : quotedRetweet ? 'Quoted retweet added!' : 'Tweet added!')
         history.goBack()
       }
 
@@ -49,6 +50,7 @@ const Reply = () => {
     const form = new FormData()
     form.append('type','tweets')
     if (reply) form.append('reply',reply._id)
+    if (quotedRetweet) form.append('_id',quotedRetweet.id)
     form.append('content',value)
     for(let {file} of files){
       form.append('files',file)
@@ -72,12 +74,13 @@ const Reply = () => {
           <Stack>
         
             <User username={username} small profilePic={profilePic} />
-         
+
             <Stack direction={'column'}>
               <TextArea value={value} onChange={(e) => setValue(e.target.value)}
               maxLength={160}
               placeholder={"What's on your mind?"}
               />
+            {quotedRetweet && <QuotedRetweet {...quotedRetweet} quotedRetweet extended={false}/>}
                 <ImageContainer images={files}>
                 {files.map(({image},index) => (
                 <Image image={image} key={index}>
@@ -100,6 +103,7 @@ const Reply = () => {
               </Toolbar>
             </Stack>
           </Stack>
+
         </ModalDiv>
     </BackDrop>
   );

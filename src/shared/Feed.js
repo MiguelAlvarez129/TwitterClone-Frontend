@@ -31,7 +31,8 @@ const Feed = (props) => {
   }
   return (
   <>
-    {!loading && response?.data.map((e,index) => <Tweet {...e} key={index} />)}
+    {!loading && response?.data.map((e,index) => 
+    (e.retweet && !e.quotedRetweet) ?  <Tweet {...e.retweet} retweetAuthor={e.author} key={index} /> : <Tweet {...e} key={index} />)}
     {!loading && !response?.data?.length && noTweetMsg()}
     {loading && <Loader center backdrop size="md"/>}
   </>

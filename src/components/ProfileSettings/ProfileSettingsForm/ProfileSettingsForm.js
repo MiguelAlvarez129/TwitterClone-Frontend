@@ -32,10 +32,11 @@ const ProfileSettingsForm = (props) => {
   },[response,loading,error])
 
   useEffect(()=>{
-    const {fullname,bio} = initialValues;
+    const {fullname,bio,bgPic,profilePic} = initialValues;
     reset({
       fullname,bio
     })
+    setData({bg:{image:process.env.REACT_APP_BASE_URL+'/'+bgPic},profile:{image: process.env.REACT_APP_BASE_URL+'/'+ profilePic}})
   },[initialValues])
 
   const onSubmit = (values) =>{ 
