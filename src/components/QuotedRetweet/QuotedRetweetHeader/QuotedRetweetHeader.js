@@ -16,6 +16,7 @@ const QuotedRetweetHeader = (props) => {
           </Title>
           @{username}
           </Stack>
+          
         </Stack>
         </HeaderContainer>
   )
