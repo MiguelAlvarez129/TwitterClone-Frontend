@@ -84,7 +84,7 @@ const RetweetButton = ({_id,...props}) => {
       Quote Tweet
     </Dropdown.Item>
   </Dropdown>
-  <ToolbarCounter  type={"red"} >
+    <ToolbarCounter  type={"green"} >
     {retweets.length}
     </ToolbarCounter>
     </>

@@ -20,8 +20,7 @@ import User from "../../shared/User";
 const UserProfile = (props) => {
   const history = useHistory();
   const location = useLocation();
-  const [data, setData] = useState({});
-  const {user} = useAuth()
+  const {user:{username:currentUser}} = useAuth()
   const {
     params: { username }, 
   } = props.match;
@@ -61,11 +60,11 @@ return (
       <ProfileContainer>
           {/* <ProfilePic hidden src={process.env.REACT_APP_BASE_URL + `/public/uploads/${username}/profile/profile.png`}/> */}
           <User username={username} small={false} profilePic={response?.data?.profilePic}  />
-          {user.username === username ? 
+          {currentUser === username ? 
           <TweetButton inverted small top onClick={openSettings} style={{flex:1,maxWidth:200}}>
             Edit Profile
           </TweetButton>
-          : <FollowButton followers={data.followers}/>}
+          : <FollowButton {...response?.data}/>}
       </ProfileContainer>
     {loading && <Loader size="md" center/>}
     {!loading && <UserProfileContent {...response?.data}/>} 
