@@ -47,34 +47,6 @@ const TweetToolbar = (props) => {
         </div>
         <div>
           <RetweetButton {...props}/>
-          {/* <Dropdown
-            placement="leftStart"
-            icon={<Icon icon="retweet" />}
-            renderTitle={() => {
-              return (
-                <div>
-                  <ToolbarButton
-                    appearance="subtle"
-                    icon={<Icon icon="retweet" />}
-                    size="lg"
-                    type={"green"}
-                    circle
-                  />
-                </div>
-              );
-            }}
-            noCaret
-          >
-            <Dropdown.Item icon={<Icon icon="retweet" />} >
-              {" "}
-              Retweet
-            </Dropdown.Item>
-            <Dropdown.Item icon={<Icon icon="edit2" />}>
-              {" "}
-              Quote Tweet
-            </Dropdown.Item>
-          </Dropdown> */}
-          {/* <b>{rq}</b> */}
         </div>
         <div>
           <LikeButton {...props} />

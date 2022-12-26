@@ -22,7 +22,7 @@ const UserList = () =>{
   return (
   <>
    <h5> Some users you may want to know:</h5>
-     {response?.data?.map(({fullname,username},index) => 
+     {response?.data?.map(({fullname,username,profilePic},index) => 
      <Link
      to={`/${username}`}
      key={index}
@@ -30,7 +30,7 @@ const UserList = () =>{
       >
      <Sideoption key={index}>
        <Stack>
-          <User small username={username}/>
+          <User small username={username} profilePic={profilePic}/>
           <Stack direction={"column"}>
           <Title>
             {fullname}

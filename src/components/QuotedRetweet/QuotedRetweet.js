@@ -2,6 +2,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Stack } from '../../shared/styles'
 import { TweetContent } from '../Tweet/tweet.styles'
+import TweetGallery from '../Tweet/TweetGallery/TweetGallery'
 import QuotedRetweetHeader from './QuotedRetweetHeader/QuotedRetweetHeader'
 import { QuotedRetweetContainer } from './quotedTweet.styles'
 
@@ -19,6 +20,7 @@ const QuotedRetweet = (props) => {
             {props.content}
           </TweetContent>
         </Stack>
+        {!!props.files.length && <TweetGallery {...props}/>}
     </QuotedRetweetContainer>
   )
 }
