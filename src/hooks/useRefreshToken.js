@@ -28,7 +28,9 @@ export const useRefreshToken = () =>{
 
   return {
     refresh,
-    loading
+    loading,
+    response,
+    error
   }
 }
 
