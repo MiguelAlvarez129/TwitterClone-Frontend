@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useEffect } from 'react';
 import { useAuth } from './useAuth';
 import {useRefresh} from './useRefresh';
+import { useRefreshToken } from './useRefreshToken';
 
 const axiosClient = axios.create();
 
@@ -16,7 +17,7 @@ axiosClient.defaults.headers = {
 export {axiosClient}
 
 export const useAxios = ({url,method,auto = false,withCredentials = false, multipart = false, key = null, invalidateKey = null}) =>{
-  const { isAuth, user:{accessToken}, setToken} = useAuth();
+  const { isAuth, user:{accessToken}, setToken,setLogOut} = useAuth();
   const [response,setResponse] = useState(null)
   const [error,setError] = useState(null)
   const [loading,setLoading] = useState(false)
@@ -62,6 +63,8 @@ export const useAxios = ({url,method,auto = false,withCredentials = false, multi
           setToken(newToken.data.accessToken)
           prevRequest.headers['Authorization'] = 'Bearer ' + newToken.data.accessToken;
           return axiosClient({...prevRequest})
+        } else if (error?.response?.status === 403 && !prevRequest?.sent){
+          setLogOut()
         }
         return Promise.reject(error);
     })

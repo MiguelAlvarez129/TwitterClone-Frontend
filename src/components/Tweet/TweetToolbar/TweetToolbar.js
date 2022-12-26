@@ -42,7 +42,7 @@ const TweetToolbar = (props) => {
             size="lg"
           />
          <ToolbarCounter type={"blue"}>
-          {comments.length}
+          {comments}
           </ToolbarCounter>
         </div>
         <div>

@@ -25,10 +25,11 @@ import PublicRoute from "./private/PublicRoute";
 import { Container } from "./shared/styles";
 import { useRefreshToken } from "./hooks/useRefreshToken";
 import { useAuth } from "./hooks/useAuth";
+import { userOnline } from "./controllers/ioControllers";
 
 
 const Main = () => {
-  const {isAuth} = useAuth();
+  const {isAuth,user:{id:userId}} = useAuth();
   const {refresh,loading} = useRefreshToken();
   const location = useLocation();
   let background =  location.state?.background;
@@ -37,17 +38,17 @@ const Main = () => {
     if (!isAuth) refresh()
   }, []);
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   const {pathname,state} = location
+    // const {pathname,state} = location
 
-  //   if(auth){
-  //     userOnline(user.username)
-  //     if (pathname == "/notifications" ){
-  //       notificationsRead(user.username)
-  //     }  
-  //   } 
-  // }, [auth]);
+    userOnline(userId)
+    // if(auth){
+    //   if (pathname == "/notifications" ){
+    //     notificationsRead(user.username)
+    //   }  
+    // } 
+  }, []);
 
   return loading ? <Loading/> : ( 
     <Switch>

@@ -17,11 +17,11 @@ export const notificationsRead = (username) =>{
 }
 
 
-export const userOnline = (username) =>{
-  socket.emit("online",{username,id:socket.id})  
+export const userOnline = (userId) =>{
+  socket.emit("online",{userId,id:socket.id})  
 }
 
-export const userOffline = (username) =>{
-  socket.emit("offline",{username,id:socket.id}) 
+export const userOffline = (userId) =>{
+  socket.emit("offline",{userId,id:socket.id}) 
 }
 export default socket
