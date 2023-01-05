@@ -29,7 +29,7 @@ import { userOnline } from "./controllers/ioControllers";
 
 
 const Main = () => {
-  const {isAuth,user:{id:userId}} = useAuth();
+  const {isAuth,user} = useAuth();
   const {refresh,loading} = useRefreshToken();
   const location = useLocation();
   let background =  location.state?.background;
@@ -39,16 +39,10 @@ const Main = () => {
   }, []);
 
   useEffect(() => {
-
-    // const {pathname,state} = location
-
-    userOnline(userId)
-    // if(auth){
-    //   if (pathname == "/notifications" ){
-    //     notificationsRead(user.username)
-    //   }  
-    // } 
-  }, []);
+    if (user.id){
+      userOnline(user.id)
+    }
+  }, [user]);
 
   return loading ? <Loading/> : ( 
     <Switch>
